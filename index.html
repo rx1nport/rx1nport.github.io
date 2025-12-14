@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rain</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #1a1a1a, #0a0a0a);
+      color: #eaeaea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      padding: 3rem 3.5rem;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      max-width: 420px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 3rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      font-size: 1.05rem;
+      opacity: 0.8;
+      margin-bottom: 2rem;
+    }
+
+    .links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    a {
+      text-decoration: none;
+      color: #eaeaea;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+    }
+
+    a:hover {
+      background: #eaeaea;
+      color: #0a0a0a;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>rain</h1>
+    <p>minimal • clean • personal</p>
+
+    <div class="links">
+      <a href="#">GitHub</a>
+      <a href="#">Projects</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <footer>
+      © 2025 rain
+    </footer>
+  </div>
+</body>
+</html>
