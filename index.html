@@ -56,26 +56,25 @@ h1,h2 { font-weight:600; letter-spacing:0.05em; }
 
 .skills-icons {
   display: flex;
-  flex-wrap: wrap;        /* allow multiple lines if needed */
+  flex-wrap: wrap; 
   justify-content: center;
-  gap: 12px;              /* spacing between icons */
+  gap: 12px;             
   margin-top: 16px;
 }
 
 .skills-icons img {
-  height: clamp(40px, 5vw, 60px);  /* min 40px, max 60px, scales with viewport */
+  height: clamp(40px, 5vw, 60px);  /
   width: auto;
   object-fit: contain;
   transition: transform 0.2s ease;
 }
 
 .skills-icons img:hover {
-  transform: scale(1.03);  /* subtle pop on hover */
+  transform: scale(1.03); 
 }
 
 .projects { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; margin-top:32px; }
 
-/* Project boxes */
 .project {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
@@ -120,7 +119,6 @@ h1,h2 { font-weight:600; letter-spacing:0.05em; }
   color: var(--hover-blue); 
 }
 
-/* Contact card */
 .contact-wrapper { display:flex; justify-content:center; margin-top:48px; }
 .contact-card {
   background: var(--card-bg);
@@ -206,6 +204,7 @@ h1,h2 { font-weight:600; letter-spacing:0.05em; }
         <a href="https://github.com/rx1nport">GitHub</a>
         <a href="#">Projects</a>
         <a href="https://www.roblox.com/users/1494350757/profile">Roblox</a>
+        <a href="https://discordapp.com/users/1095889173870809248">Discord</a>
       </div>
       <footer>© 2026</footer>
     </div>
@@ -213,7 +212,7 @@ h1,h2 { font-weight:600; letter-spacing:0.05em; }
 </section>
 
 <script>
-// Scroll animations that play every time you scroll into a section
+  
 const sections = document.querySelectorAll('section');
 
 const observer = new IntersectionObserver((entries) => {
