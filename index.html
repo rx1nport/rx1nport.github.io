@@ -1,306 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rain — Portfolio</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/previews/010/332/153/non_2x/code-flat-color-outline-icon-free-png.png">
+<title>Rainport</title>
 
-  <style>
-  :root {
-    --black: #000000;
-    --dark-gray: #666666;
-    --medium-gray: #979797;
-    --light-gray: #EEEEEE;
-    --blue: #0088CC;
-  }
+<style>
+:root {
+  --black: #000000;
+  --dark-gray: #666666;
+  --medium-gray: #818589;
+  --light-gray: #EEEEEE;
+  --white: #FFFFFF;
+  --card-bg: rgba(0,0,0,0.85);
+  --hover-blue: #6082B6;
+}
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  }
+* { margin:0; padding:0; box-sizing:border-box; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+html { scroll-behavior: smooth; }
+body { background: var(--light-gray); color: var(--black); line-height:1.6; }
 
-  html {
-    scroll-behavior: smooth;
-  }
+a { text-decoration:none; color:var(--white); transition: color 0.3s ease; }
+a:hover { color: var(--hover-blue); }
 
-  body {
-    background: var(--light-gray);
-    color: var(--black);
-    line-height: 1.6;
-  }
+nav { position:sticky; top:0; background:rgba(238,238,238,0.9); backdrop-filter: blur(10px); z-index:10; }
+nav ul { display:flex; justify-content:center; gap:32px; padding:16px; list-style:none; }
+nav a { font-weight:500; color: var(--black); opacity:0.85; }
+nav a:hover { color: var(--hover-blue); opacity:1; }
 
-  a {
-    text-decoration: none;
-    color: var(--blue);
-    transition: color 0.2s ease;
-  }
+section {
+  max-width:1100px;
+  margin:auto;
+  padding:100px 24px;
+  scroll-margin-top:80px;
+  opacity:0;
+  transform:translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+section.visible {
+  opacity:1;
+  transform:translateY(0);
+}
 
-  a:hover {
-    color: var(--dark-gray);
-  }
+h1,h2 { font-weight:600; letter-spacing:0.05em; }
 
-  nav {
-    position: sticky;
-    top: 0;
-    background: rgba(238,238,238,0.9);
-    backdrop-filter: blur(10px);
-    z-index: 10;
-  }
+.hero { text-align:center; padding-top:160px; }
+.hero h1 { font-size:clamp(2.5rem,5vw,4rem); color: var(--black); }
+.hero p { margin-top:16px; color: var(--dark-gray); font-size:1.1rem; }
 
-  nav ul {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    padding: 16px;
-    list-style: none;
-  }
+.about { display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+@media(max-width:800px){ .about { grid-template-columns:1fr; } }
+.about h2 { color: var(--black); }
+.about p { color: var(--dark-gray); }
 
-  nav a {
-    font-weight: 500;
-    color: var(--black);
-    opacity: 0.85;
-  }
+.skills-icons {
+  display: flex;
+  flex-wrap: wrap;        /* allow multiple lines if needed */
+  justify-content: center;
+  gap: 12px;              /* spacing between icons */
+  margin-top: 16px;
+}
 
-  nav a:hover {
-    color: var(--blue);
-  }
+.skills-icons img {
+  height: clamp(40px, 5vw, 60px);  /* min 40px, max 60px, scales with viewport */
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
 
-  section {
-    max-width: 1100px;
-    margin: auto;
-    padding: 100px 24px;
-    scroll-margin-top: 80px;
-    opacity: 0; /* hidden by default */
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
+.skills-icons img:hover {
+  transform: scale(1.03);  /* subtle pop on hover */
+}
 
-  section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.projects { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; margin-top:32px; }
 
-  h1, h2 {
-    font-weight: 600;
-    letter-spacing: 0.05em;
-  }
+/* Project boxes */
+.project {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  padding:28px;
+  border-radius:18px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--white);
+  position:relative;
+  overflow:hidden;
+}
+.project::before {
+  content:'';
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+  transform:rotate(25deg);
+  transition: all 0.5s ease;
+  pointer-events:none;
+}
+.project:hover::before { top:-60%; left:-60%; }
+.project:hover { transform:translateY(-8px); box-shadow:0 25px 60px rgba(0,0,0,0.7); }
 
-  .hero {
-    text-align: center;
-    padding-top: 160px;
-  }
+.project h3 { margin-bottom:12px; }
+.project p { color: var(--white); opacity:0.9; margin-bottom:16px; }
 
-  .hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: var(--black);
-  }
+.project a {
+  display:inline-block;
+  padding:0.6rem 1.2rem;
+  border-radius:6px;
+  background: var(--card-bg);
+  color: var(--white);
+  font-weight:500;
+  border:1px solid var(--white);
+  transition: all 0.2s ease;
+}
+.project a:hover { 
+  background: var(--white); 
+  color: var(--hover-blue); 
+}
 
-  .hero p {
-    margin-top: 16px;
-    color: var(--dark-gray);
-    font-size: 1.1rem;
-  }
+/* Contact card */
+.contact-wrapper { display:flex; justify-content:center; margin-top:48px; }
+.contact-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-radius:18px;
+  padding:3rem 3.5rem;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,0.6);
+  max-width:430px;
+  width:100%;
+  color:var(--white);
+}
+.contact-card h1, .contact-card p { color: var(--white); }
+.contact-links { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+.contact-links a { color: var(--white); border:1px solid var(--white); padding:0.6rem 1.2rem; border-radius:999px; font-size:0.9rem; transition: all 0.2s ease; background: rgba(255,255,255,0.1); }
+.contact-links a:hover { background:var(--white); color:var(--hover-blue); }
+.contact-card footer { margin-top:2rem; font-size:0.75rem; opacity:0.6; color:var(--medium-gray); }
 
-  .about {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-  }
-
-  @media (max-width: 800px) {
-    .about {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .about h2 {
-    color: var(--black);
-  }
-
-  .about p {
-    color: var(--dark-gray);
-  }
-
-  .projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-    margin-top: 32px;
-  }
-
-  .project {
-    background: rgba(0,136,204,0.05);
-    backdrop-filter: blur(12px);
-    padding: 28px;
-    border-radius: 16px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-    transition: transform 0.25s ease, border 0.2s ease;
-    color: var(--black);
-  }
-
-  .project:hover {
-    transform: translateY(-6px);
-    border: 1px solid var(--blue);
-  }
-
-  .project p {
-    opacity: 0.8;
-    color: var(--dark-gray);
-  }
-
-  .contact-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 48px;
-  }
-
-  .contact-card {
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(12px);
-    border-radius: 18px;
-    padding: 3rem 3.5rem;
-    text-align: center;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-    max-width: 480px;
-    width: 100%;
-    color: var(--light-gray);
-  }
-
-  .contact-card h1 {
-    font-size: 3rem;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.75rem;
-    color: var(--blue);
-  }
-
-  .contact-card p {
-    font-size: 1.05rem;
-    opacity: 0.9;
-    margin-bottom: 2rem;
-    color: var(--light-gray);
-  }
-
-  .contact-links {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .contact-links a {
-    color: var(--blue);
-    border: 1px solid var(--blue);
-    padding: 0.6rem 1.2rem;
-    border-radius: 999px;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-    background: rgba(0,136,204,0.1);
-  }
-
-  .contact-links a:hover {
-    background: var(--blue);
-    color: var(--light-gray);
-  }
-
-  .contact-card footer {
-    margin-top: 2rem;
-    font-size: 0.75rem;
-    opacity: 0.6;
-    color: var(--medium-gray);
-  }
-
-  </style>
+</style>
 </head>
 
 <body>
 
-  <nav>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<nav>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contacts</a></li>
+  </ul>
+</nav>
 
-  <section class="hero">
-    <h1>rain</h1>
-    <p>Developer · Designer · Creator</p>
-  </section>
+<section class="hero">
+  <h1>rain</h1>
+  <p>Developer · Designer</p>
+</section>
 
-  <section id="about">
-    <div class="about">
-      <div>
-        <h2>About Me</h2>
-        <p>
-          I build clean, minimal, and polished experiences with a focus
-          on visuals, performance, and feel.
-        </p>
-      </div>
-      <div>
-        <h2>Skills</h2>
-        <p>
-          HTML, CSS, JavaScript<br>
-          UI / UX Design<br>
-          Game & Systems Development
-        </p>
+<section id="about">
+  <div class="about">
+    <div>
+      <h2>Hey there.</h2>
+      <p>Hi, I'm rain, a developer from the US. I'm usually working on projects on the platform ROBLOX. You may find me working on other projects though.</p>
+    </div>
+    <div>
+      <h2>Skills</h2>
+      <p>Full-stack website developer, fluent in HTML, CSS, JavaScript<br>Lore writing<br>Cloud Development<br>Game Design<br>+More</p>
+      <div class="skills-icons">
+        <img src="https://skillicons.dev/icons?i=html,css,js,ts,python,java,cs,react,github,linux,unity,lua" alt="Skills Icons">
       </div>
     </div>
-  </section>
-  
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="projects">
-      <div class="project">
-        <h3>Project One</h3>
-        <p>Short description of what this project does.</p>
-      </div>
+  </div>
+</section>
 
-      <div class="project">
-        <h3>Project Two</h3>
-        <p>What problem it solves and why it’s cool.</p>
-      </div>
-
-      <div class="project">
-        <h3>Project Three</h3>
-        <p>Tech used and what you learned.</p>
-      </div>
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="projects">
+    <div class="project">
+      <h3>I</h3>
+      <p>R:R // Rooms Revisited</p>
+      <a href="I.html">View Project</a>
     </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="contact-wrapper">
-      <div class="contact-card">
-        <h1>rain</h1>
-        <p>test</p>
-        <div class="contact-links">
-          <a href="#">GitHub</a>
-          <a href="#projects">Projects</a>
-          <a href="mailto:youremail@example.com">Contact</a>
-        </div>
-        <footer>© 2026</footer>
-      </div>
+    <div class="project">
+      <h3>II</h3>
+      <p>// Personal Project</p>
+      <a href="II.html">View Project</a>
     </div>
-  </section>
 
-  <script>
-    const sections = document.querySelectorAll('section');
+    <div class="project">
+      <h3>III</h3>
+      <p>// Vendetta</p>
+      <a href="III.html">View Project</a>
+    </div>
+  </div>
+</section>
 
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
+<section id="contact">
+  <div class="contact-wrapper">
+    <div class="contact-card">
+      <h1>raindev._</h1>
+      <p>Links</p>
+      <div style="height:8px;"></div>
+      <div class="contact-links">
+        <a href="https://github.com/rx1nport">GitHub</a>
+        <a href="#">Projects</a>
+        <a href="https://www.roblox.com/users/1494350757/profile">Roblox</a>
+      </div>
+      <footer>© 2026</footer>
+    </div>
+  </div>
+</section>
 
-    sections.forEach(section => {
-      observer.observe(section);
-    });
-  </script>
+<script>
+// Scroll animations that play every time you scroll into a section
+const sections = document.querySelectorAll('section');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible'); // allows repeat animation
+    }
+  });
+}, { threshold:0.2 });
+
+sections.forEach(section => observer.observe(section));
+</script>
+
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
 
 </body>
 </html>
