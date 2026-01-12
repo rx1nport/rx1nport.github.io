@@ -8,34 +8,61 @@
 
 <style>
 :root {
-  --black: #FFFFFF;
-  --dark-gray: #BBBBBB;
-  --medium-gray: #9A9A9A;
-  --light-gray: #000000;
-  --white: #000000;
+  --bg: #0b0b0b;
+  --bg-soft: #121212;
+  --text: #ffffff;
+  --text-muted: #b5b5b5;
+  --border: rgba(255,255,255,0.08);
   --card-bg: rgba(20,20,20,0.85);
-  --hover-blue: #9FB7E8;
+  --hover-blue: #9fb7e8;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
-html { scroll-behavior: smooth; }
-body { background: var(--light-gray); color: var(--black); line-height:1.6; }
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
 
-a { text-decoration:none; color:var(--white); transition: color 0.3s ease; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration:none;
+  color: var(--text);
+  transition: color 0.25s ease;
+}
 a:hover { color: var(--hover-blue); }
 
+/* ===== NAV ===== */
 nav {
   position: sticky;
   top: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
   z-index: 10;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
-nav ul { display:flex; justify-content:center; gap:32px; padding:16px; list-style:none; }
-nav a { font-weight:500; color: var(--black); opacity:0.85; }
-nav a:hover { color: var(--hover-blue); opacity:1; }
+nav ul {
+  display:flex;
+  justify-content:center;
+  gap:32px;
+  padding:16px;
+  list-style:none;
+}
+nav a {
+  font-weight:500;
+  color: var(--text);
+  opacity:0.85;
+}
+nav a:hover { opacity:1; }
 
+/* ===== SECTIONS ===== */
 section {
   max-width:1100px;
   margin:auto;
@@ -50,37 +77,60 @@ section.visible {
   transform:translateY(0);
 }
 
-h1,h2 { font-weight:600; letter-spacing:0.05em; }
-
-.hero { text-align:center; padding-top:160px; }
-.hero h1 { color: var(--white); }
-.hero p { color: var(--medium-gray); }
-
-.about { display:grid; grid-template-columns:1fr 1fr; gap:48px; }
-@media(max-width:800px){ .about { grid-template-columns:1fr; } }
-.about h2 { color: var(--white); }
-.about p { color: var(--medium-gray); }
-  
-.skills-icons {
-  display: flex;
-  flex-wrap: wrap; 
-  justify-content: center;
-  gap: 12px;             
-  margin-top: 16px;
+h1,h2,h3 {
+  font-weight:600;
+  letter-spacing:0.05em;
+  color: var(--text);
 }
 
+/* ===== HERO ===== */
+.hero {
+  text-align:center;
+  padding-top:160px;
+}
+.hero h1 {
+  font-size:clamp(2.5rem,5vw,4rem);
+}
+.hero p {
+  margin-top:16px;
+  color: var(--text-muted);
+  font-size:1.1rem;
+}
+
+/* ===== ABOUT ===== */
+.about {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+}
+@media(max-width:800px){
+  .about { grid-template-columns:1fr; }
+}
+.about p { color: var(--text-muted); }
+
+/* ===== SKILLS ===== */
+.skills-icons {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  margin-top:16px;
+}
 .skills-icons img {
-  height: clamp(40px, 5vw, 60px);  /
-  width: auto;
-  object-fit: contain;
+  height:clamp(40px,5vw,60px);
   transition: transform 0.2s ease;
 }
-
 .skills-icons img:hover {
-  transform: scale(1.03); 
+  transform:scale(1.05);
 }
 
-.projects { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; margin-top:32px; }
+/* ===== PROJECTS ===== */
+.projects {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+  margin-top:32px;
+}
 
 .project {
   background: var(--card-bg);
@@ -89,44 +139,46 @@ h1,h2 { font-weight:600; letter-spacing:0.05em; }
   border-radius:18px;
   box-shadow:0 15px 40px rgba(0,0,0,0.6);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: var(--white);
   position:relative;
   overflow:hidden;
 }
+
 .project::before {
   content:'';
   position:absolute;
-  top:-50%;
-  left:-50%;
-  width:200%;
-  height:200%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+  inset:-50%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.05), transparent);
   transform:rotate(25deg);
-  transition: all 0.5s ease;
-  pointer-events:none;
 }
-.project:hover::before { top:-60%; left:-60%; }
-.project:hover { transform:translateY(-8px); box-shadow:0 25px 60px rgba(0,0,0,0.7); }
 
-.project h3 { margin-bottom:12px; }
-.project p { color: var(--white); opacity:0.9; margin-bottom:16px; }
+.project:hover {
+  transform:translateY(-8px);
+  box-shadow:0 25px 60px rgba(0,0,0,0.8);
+}
+
+.project p {
+  color: var(--text-muted);
+  margin-bottom:16px;
+}
 
 .project a {
   display:inline-block;
   padding:0.6rem 1.2rem;
   border-radius:6px;
-  background: var(--card-bg);
-  color: var(--white);
-  font-weight:500;
-  border:1px solid var(--white);
-  transition: all 0.2s ease;
+  border:1px solid var(--border);
+  background:transparent;
 }
-.project a:hover { 
-  background: var(--white); 
-  color: var(--hover-blue); 
+.project a:hover {
+  background:var(--text);
+  color:var(--bg);
 }
 
-.contact-wrapper { display:flex; justify-content:center; margin-top:48px; }
+/* ===== CONTACT ===== */
+.contact-wrapper {
+  display:flex;
+  justify-content:center;
+  margin-top:48px;
+}
 .contact-card {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
@@ -135,15 +187,32 @@ h1,h2 { font-weight:600; letter-spacing:0.05em; }
   text-align:center;
   box-shadow:0 20px 50px rgba(0,0,0,0.6);
   max-width:430px;
-  width:100%;
-  color:var(--white);
 }
-.contact-card h1, .contact-card p { color: var(--white); }
-.contact-links { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
-.contact-links a { color: var(--white); border:1px solid var(--white); padding:0.6rem 1.2rem; border-radius:999px; font-size:0.9rem; transition: all 0.2s ease; background: rgba(255,255,255,0.1); }
-.contact-links a:hover { background:var(--white); color:var(--hover-blue); }
-.contact-card footer { margin-top:2rem; font-size:0.75rem; opacity:0.6; color:var(--medium-gray); }
-
+.contact-card p {
+  color: var(--text-muted);
+}
+.contact-links {
+  display:flex;
+  gap:1rem;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.contact-links a {
+  border:1px solid var(--border);
+  padding:0.6rem 1.2rem;
+  border-radius:999px;
+  font-size:0.9rem;
+  background:rgba(255,255,255,0.06);
+}
+.contact-links a:hover {
+  background:var(--text);
+  color:var(--bg);
+}
+footer {
+  margin-top:2rem;
+  font-size:0.75rem;
+  opacity:0.5;
+}
 </style>
 </head>
 
@@ -166,13 +235,13 @@ h1,h2 { font-weight:600; letter-spacing:0.05em; }
   <div class="about">
     <div>
       <h2>Hey there.</h2>
-      <p>Hi, I'm rain, a developer from the US. I'm usually working on projects on the platform ROBLOX. You may find me working on other projects though.</p>
+      <p>Hi, I'm rain, a developer from the US. I'm usually working on projects on the platform ROBLOX.</p>
     </div>
     <div>
       <h2>Skills</h2>
-      <p>Full-stack website developer, fluent in HTML, CSS, JavaScript<br>Lore writing<br>Cloud Development<br>Game Design<br>+More</p>
+      <p>Full-stack developer · Game design · Cloud · Lore writing</p>
       <div class="skills-icons">
-        <img src="https://skillicons.dev/icons?i=html,css,js,ts,python,java,cs,react,github,linux,unity,lua" alt="Skills Icons">
+        <img src="https://skillicons.dev/icons?i=html,css,js,ts,python,java,cs,react,github,linux,unity,lua">
       </div>
     </div>
   </div>
@@ -186,13 +255,11 @@ h1,h2 { font-weight:600; letter-spacing:0.05em; }
       <p>R:R // Rooms Revisited</p>
       <a href="I.html">View Project</a>
     </div>
-
     <div class="project">
       <h3>II</h3>
       <p>// Personal Project</p>
       <a href="II.html">View Project</a>
     </div>
-
     <div class="project">
       <h3>III</h3>
       <p>// Vendetta</p>
@@ -206,7 +273,6 @@ h1,h2 { font-weight:600; letter-spacing:0.05em; }
     <div class="contact-card">
       <h1>raindev._</h1>
       <p>Links</p>
-      <div style="height:8px;"></div>
       <div class="contact-links">
         <a href="https://github.com/rx1nport">GitHub</a>
         <a href="#">Projects</a>
@@ -219,42 +285,15 @@ h1,h2 { font-weight:600; letter-spacing:0.05em; }
 </section>
 
 <script>
-  
 const sections = document.querySelectorAll('section');
-
-const observer = new IntersectionObserver((entries) => {
+const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-    } else {
-      entry.target.classList.remove('visible'); // allows repeat animation
-    }
+    entry.target.classList.toggle('visible', entry.isIntersecting);
   });
-}, { threshold:0.2 });
+},{ threshold:0.2 });
 
-sections.forEach(section => observer.observe(section));
+sections.forEach(s => observer.observe(s));
 </script>
-
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
 
 </body>
 </html>
