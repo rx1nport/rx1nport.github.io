@@ -1,305 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Rainport</title>
-
-<style>
-:root {
-  --bg:#0b0b0b;
-  --card-bg:rgba(20,20,20,0.85);
-  --text:#ffffff;
-  --muted:#b5b5b5;
-  --border:rgba(255,255,255,0.08);
-}
-
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
-
-body {
-  background:var(--bg);
-  color:var(--text);
-}
-
-/* ===== NAV ===== */
-nav {
-  position:sticky;
-  top:0;
-  background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-}
-nav ul {
-  display:flex;
-  justify-content:center;
-  gap:32px;
-  padding:16px;
-  list-style:none;
-}
-nav a { color:var(--text); opacity:.8; }
-nav a:hover { opacity:1; }
-
-/* ===== SECTIONS ===== */
-section {
-  max-width:1200px;
-  margin:auto;
-  padding:100px 24px;
-  opacity:0;
-  transform:translateY(40px);
-  transition:0.8s ease;
-}
-section.visible {
-  opacity:1;
-  transform:none;
-}
-
-/* ===== HERO ===== */
-.hero {
-  text-align:center;
-  padding-top:160px;
-}
-
-/* ===== PFP ===== */
-.pfp-wrapper {
-  position:relative;
-  width:140px;
-  height:140px;
-  margin:0 auto 28px;
-}
-
-.pfp {
-  width:100%;
-  height:100%;
-  border-radius:50%;
-  overflow:hidden;
-  border:1px solid var(--border);
-  background:var(--card-bg);
-  box-shadow:0 15px 40px rgba(0,0,0,.7);
-  position:relative;
-  z-index:2;
-}
-
-.pfp img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.pfp-ring {
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  border:2px solid white;
-  opacity:0;
-  pointer-events:none;
-}
-
-.pfp-ring.pulse {
-  animation:pulseOut .85s cubic-bezier(.22,1,.36,1);
-}
-
-@keyframes pulseOut {
-  0% { opacity:0; transform:scale(1); }
-  20% { opacity:1; }
-  100% { opacity:0; transform:scale(1.65); }
-}
-
-.hero h1 {
-  font-size:clamp(2.5rem,5vw,4rem);
-  letter-spacing:.05em;
-}
-.hero p {
-  margin-top:16px;
-  color:var(--muted);
-}
-
-/* ===== PROJECT CARD ===== */
-.roblox-project {
-  display:flex;
-  gap:48px;
-  background:var(--card-bg);
-  backdrop-filter:blur(12px);
-  padding:40px;
-  border-radius:18px;
-  box-shadow:0 15px 40px rgba(0,0,0,.6);
-  border:1px solid var(--border);
-  margin-top:48px;
-}
-
-/* thumbnail */
-.roblox-thumb {
-  flex:0 0 640px;
-  max-width:640px;
-  aspect-ratio:16/9;
-  border-radius:14px;
-  overflow:hidden;
-}
-
-.roblox-thumb img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* info */
-.roblox-info {
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:18px;
-}
-
-.roblox-info h3 {
-  font-size:2.3rem;
-}
-
-.roblox-info p {
-  color:var(--muted);
-  font-size:1.1rem;
-}
-
-/* buttons */
-.button-row {
-  display:flex;
-  gap:14px;
-  margin-top:14px;
-}
-
-.roblox-btn {
-  padding:.85rem 2.2rem;
-  font-size:1rem;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.08);
-  color:var(--text);
-  cursor:pointer;
-  transition:transform .25s ease, background .25s ease, box-shadow .25s ease;
-}
-
-.roblox-btn:hover {
-  background:white;
-  color:black;
-  transform:translateY(-3px);
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
-}
-
-/* ===== SLIDE-OUT INFO BLOCK ===== */
-.project-extra {
-  margin-top:18px;
-  background:var(--card-bg);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:22px 26px;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
-
-  opacity:0;
-  transform:translateY(-12px);
-  pointer-events:none;
-  transition:opacity .35s ease, transform .35s ease;
-}
-
-.project-extra.open {
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
-}
-
-.project-extra p {
-  color:var(--muted);
-  line-height:1.6;
-}
-
-/* mobile */
-@media(max-width:900px){
-  .roblox-project {
-    flex-direction:column;
-  }
-  .roblox-thumb {
-    max-width:100%;
-  }
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <nav>
   <ul>
     <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a class="home" href="#pfp-section">Home</a></li>
+    <li><a href="#contact">Contact Info</a></li>
   </ul>
 </nav>
 
-<section class="hero">
+<section class="pfp-section" id="pfp-section">
   <div class="pfp-wrapper" id="pfpTrigger">
     <div class="pfp-ring" id="pfpRing"></div>
-    <div class="pfp">
-      <img src="https://i.imgur.com/sqGdPmr.jpeg">
-    </div>
+    <div class="pfp"><img src="https://i.imgur.com/sqGdPmr.jpeg"/></div>
   </div>
   <h1>rain</h1>
   <p>Developer · Designer</p>
 </section>
 
-<section id="projects">
-  <h2>Projects</h2>
-
-  <div class="roblox-project">
-    <div class="roblox-thumb">
-      <img src="https://i.imgur.com/cozQ5ej.png">
+<section id="about">
+  <div class="about">
+    <div>
+      <h2>Hey there.</h2>
+      <p>Hi, I'm rain, a developer from the US. I'm usually working on projects on the platform ROBLOX.</p>
     </div>
-
-    <div class="roblox-info">
-      <h3>Rooms: Revisited</h3>
-      <p>by EclipseGames!</p>
-
-      <div class="button-row">
-        <button class="roblox-btn">View Project</button>
-        <button class="roblox-btn" id="toggleExtra">More Info</button>
+    <div>
+      <h2>Skills</h2>
+      <p>Full-stack developer · Game design · Cloud · Lore writing</p>
+      <div class="skills-icons">
+        <img src="https://skillicons.dev/icons?i=html,css,js,ts,python,java,cs,react,github,linux,unity,lua"/>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="project-extra" id="extraInfo">
-    <p>
-      A fun project inspired by doors, Worked on for a while--left due to drama.
-    </p>
+<section id="projects">
+  <h2>Projects</h2>
+
+  <!-- PROJECT 1 -->
+  <div class="roblox-project" data-slideshow>
+    <div class="roblox-thumb">
+      <span class="thumb-nav left">&#10094;</span>
+      <span class="thumb-nav right">&#10095;</span>
+      <img src="https://i.imgur.com/bxXjnjR.jpeg" class="active"/>
+      <img src="https://i.imgur.com/3z9kzCH.jpeg"/>
+      <img src="https://i.imgur.com/EmsPZvi.jpeg"/>
+    </div>
+    <div class="roblox-info">
+      <h3>Project Apex</h3>
+      <p1>Arcsoft Development</p1>
+      <p>IN DEVELOPMENT — GAME IS CURRENTLY CLOSED.<br/><br/>Inspired by HELLMET, deadlines and brm5.</p>
+      <div class="button-row">
+        <a href="https://www.roblox.com/games/15509312676/PROJECT-APEX" class="roblox-btn view-project" target="_blank">▶ View Project</a>
+        <a href="https://discord.gg/arcsoft" class="roblox-btn discord" target="_blank">Discord</a>
+        <a href="https://youtu.be/e3u_CEmHRtE" class="roblox-btn video" target="_blank">🎬 Watch Video</a>
+      </div>
+    </div>
   </div>
+  <div class="roblox-subinfo">A next-gen ROBLOX game. PVE Mission-based campaign following the history of the TITAN Corporation, experienced through helmet-cam footage.</div>
 
+  <!-- PROJECT 2 -->
+  <div class="roblox-project" data-slideshow>
+    <div class="roblox-thumb">
+      <span class="thumb-nav left">&#10094;</span>
+      <span class="thumb-nav right">&#10095;</span>
+      <img src="https://i.imgur.com/7MsAERQ.png" class="active"/>
+      <img src="https://i.imgur.com/sQvSwuc.png"/>
+    </div>
+    <div class="roblox-info">
+      <h3>[LEGACY] Rooms: Revisited</h3>
+      <p1>by EclipseGames!</p1>
+      <p>Inspired by @nicorocks5555's ROOMS. <br/>Left due to issues & drama.</p>
+      <div class="button-row">
+        <a href="https://www.roblox.com/games/15363062864/ROOMS-REVISITED" class="roblox-btn view-project" target="_blank">▶ View Project</a>
+        <a href="https://discord.gg/PsvMR7tK" class="roblox-btn discord" target="_blank">Discord</a>
+      </div>
+    </div>
+  </div>
+  <div class="roblox-subinfo">Step into an office where each door is a gamble. Under new management — renovation update coming soon.</div>
+
+  <!-- PROJECT 3 -->
+  <div class="roblox-project" data-slideshow>
+    <div class="roblox-thumb">
+      <span class="thumb-nav left">&#10094;</span>
+      <span class="thumb-nav right">&#10095;</span>
+      <img src="https://i.imgur.com/iKKKUjP.png" class="active"/>
+    </div>
+    <div class="roblox-info">
+      <h3>Vendetta</h3>
+      <p1>Shellworks Development</p1>
+      <p>IN DEVELOPMENT — GAME IS CURRENTLY CLOSED.<br/><br/>INSPIRED BY GAMES LIKE PROJECT APEX!!</p>
+      <div class="button-row">
+        <a href="https://www.roblox.com/games/34567" class="roblox-btn view-project" target="_blank">▶ View Project</a>
+        <a href="https://discord.gg/zXGmjSB7" class="roblox-btn discord" target="_blank">Discord</a>
+      </div>
+    </div>
+  </div>
+  <div class="roblox-subinfo">Side project that I'm working on. Still in Early development stage. Sneak peeks in discord. More updates coming soon.</div>
 </section>
 
 <section id="contact">
-  <p style="text-align:center;opacity:.5">© 2026</p>
+  <h2 style="text-align:center;margin-bottom:20px;">Contact Info</h2>
+  <div class="contact-buttons">
+    <a href="https://discordapp.com/users/1095889173870809248" target="_blank">Discord</a>
+    <a href="https://www.roblox.com/users/1494350757/profile" target="_blank">Roblox</a>
+  </div>
+  <p style="text-align:center;opacity:.5;margin-top:32px;">© 2026</p>
 </section>
 
 <script>
 /* reveal */
-const sections=document.querySelectorAll("section");
-const obs=new IntersectionObserver(e=>{
-  e.forEach(x=>x.target.classList.toggle("visible",x.isIntersecting))
-},{threshold:.2});
-sections.forEach(s=>obs.observe(s));
+const obs=new IntersectionObserver(e=>{ e.forEach(x=>x.target.classList.toggle("visible",x.isIntersecting)); },{threshold:.2});
+document.querySelectorAll("section").forEach(s=>obs.observe(s));
 
 /* pfp pulse */
-const trigger=document.getElementById("pfpTrigger");
 const ring=document.getElementById("pfpRing");
-trigger.addEventListener("mouseenter",()=>{
-  ring.classList.remove("pulse");
-  void ring.offsetWidth;
-  ring.classList.add("pulse");
-});
+document.getElementById("pfpTrigger").addEventListener("mouseenter",()=>{ ring.classList.remove("pulse"); void ring.offsetWidth; ring.classList.add("pulse"); });
 
-/* toggle extra block */
-const toggle=document.getElementById("toggleExtra");
-const extra=document.getElementById("extraInfo");
-toggle.addEventListener("click",()=>{
-  extra.classList.toggle("open");
+/* slideshows with arrows */
+document.querySelectorAll("[data-slideshow]").forEach(card=>{
+  const slides=card.querySelectorAll("img");
+  let i=0;
+  const showSlide=(index)=>{ slides.forEach((s,idx)=>s.classList.toggle("active", idx===index)); }
+  const leftBtn=card.querySelector(".thumb-nav.left");
+  const rightBtn=card.querySelector(".thumb-nav.right");
+  leftBtn.addEventListener("click",()=>{ i=(i-1+slides.length)%slides.length; showSlide(i); });
+  rightBtn.addEventListener("click",()=>{ i=(i+1)%slides.length; showSlide(i); });
+  setInterval(()=>{ i=(i+1)%slides.length; showSlide(i); },4000);
 });
 </script>
 
