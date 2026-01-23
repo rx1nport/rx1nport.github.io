@@ -79,8 +79,8 @@ section.visible { opacity:1; transform:none; }
 .roblox-btn.view-project { background:var(--accent); color:white; width:100%; }
 .roblox-btn.view-project:hover { background:#1c86ee; }
 .roblox-btn.discord { width:100%; }
-.roblox-btn.video { background:#ff4500; color:white; width:100%; }
-.roblox-btn.video:hover { background:#e03e00; }
+.roblox-btn.video { background:#ff6347; color:white; width:100%; }
+.roblox-btn.video:hover { background:#e5533d; }
 
 /* ===== CONTACT BUTTONS ===== */
 .contact-buttons { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:24px; }
