@@ -7,11 +7,20 @@ document.querySelectorAll("section").forEach(s=>obs.observe(s));
 
 /* Pulse */
 const ring = document.getElementById("pfpRing");
+let isPulsing = false;
+
 document.getElementById("pfpTrigger").addEventListener("mouseenter", () => {
+  if (isPulsing) return;
+
   ring.classList.remove("pulse");
   void ring.offsetWidth;
   ring.classList.add("pulse");
-});
+
+  isPulsing = true;
+  ring.addEventListener("animationend", () => {
+    isPulsing = false;
+  }, { once: true });
+});   
 
 /* Slideshow Arrows */
 document.querySelectorAll("[data-slideshow]").forEach(card => {
