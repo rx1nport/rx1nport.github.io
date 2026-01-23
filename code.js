@@ -20,6 +20,9 @@ document.getElementById("pfpTrigger").addEventListener("mouseenter", () => {
   ring.addEventListener("animationend", () => {
     isPulsing = false;
   }, { once: true });
+  setTimeout(() => {
+  console.log("Wait");
+  }, 500);
 });   
 
 /* Slideshow Arrows */
