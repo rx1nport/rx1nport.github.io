@@ -1,11 +1,88 @@
-.circle {
-  height: 24px;
-  width: 24px;
-  border-radius: 24px;
-  background-color: black;
-  position: fixed; 
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 99999999; 
+:root {
+  --bg:#0b0b0b;
+  --card-bg:rgba(20,20,20,0.45);
+  --text:#ffffff;
+  --muted:#b5b5b5;
+  --border:rgba(255,255,255,0.08);
+  --accent:#1e90ff;
 }
+
+/* ===== GENERAL ===== */
+* { margin:0; padding:0; box-sizing:border-box; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+html { scroll-padding-top: 80px; scroll-behavior: smooth; }
+body { background:var(--bg); color:var(--text); }
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar { width:12px; background:var(--bg); }
+::-webkit-scrollbar-track { background:var(--bg); border-radius:6px; }
+::-webkit-scrollbar-thumb { background:#ffffff; border-radius:6px; }
+::-webkit-scrollbar-thumb:hover { background:#e0e0e0; }
+
+/* ===== NAV ===== */
+nav { position:sticky; top:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); z-index:10; }
+nav ul { display:flex; justify-content:center; gap:32px; padding:16px; list-style:none; }
+nav a { color:var(--text); opacity:.8; text-decoration:none; padding:8px 12px; transition: all .25s ease; }
+nav a:hover { opacity:1; }
+nav a.home { font-size:1.25rem; font-weight:bold; }
+
+/* ===== SECTIONS ===== */
+section { max-width:1200px; margin:auto; padding:100px 24px; opacity:0; transform:translateY(40px); transition:0.8s ease; }
+section.visible { opacity:1; transform:none; }
+
+/* ===== PFP ===== */
+.pfp-section { text-align:center; padding-top:160px; }
+.pfp-wrapper { position:relative; width:140px; height:140px; margin:0 auto 28px; }
+.pfp { width:100%; height:100%; border-radius:50%; overflow:hidden; border:1px solid var(--border); background:var(--card-bg); box-shadow:0 15px 40px rgba(0,0,0,.7); position:relative; z-index:2; }
+.pfp img { width:100%; height:100%; object-fit:cover; }
+.pfp-ring { position:absolute; inset:0; border-radius:50%; border:2px solid white; opacity:0; pointer-events:none; }
+.pfp-ring.pulse { animation:pulseOut .85s cubic-bezier(.22,1,.36,1); }
+@keyframes pulseOut { 0%{opacity:0;transform:scale(1);} 20%{opacity:1;} 100%{opacity:0;transform:scale(1.65);} }
+
+/* ===== ABOUT ===== */
+.about { display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+@media(max-width:800px){ .about { grid-template-columns:1fr; } }
+.about p { color:var(--muted); }
+
+/* ===== SKILLS ===== */
+.skills-icons { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:16px; }
+.skills-icons img { height:clamp(40px,5vw,60px); transition: transform 0.2s ease; }
+.skills-icons img:hover { transform:scale(1.05); }
+
+/* ===== PROJECT CARD ===== */
+.roblox-project { display:flex; gap:48px; background:var(--card-bg); padding:40px; border-radius:18px; border:1px solid var(--border); box-shadow:0 15px 40px rgba(0,0,0,.6); margin-top:48px; backdrop-filter:blur(10px); position:relative; }
+@media(max-width:900px){ .roblox-project { flex-direction:column; } .roblox-thumb { max-width:100%; } }
+
+/* ===== SLIDESHOW ===== */
+.roblox-thumb { flex:0 0 640px; max-width:640px; aspect-ratio:16/9; border-radius:14px; overflow:hidden; position:relative; cursor:pointer; }
+.roblox-thumb img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .6s ease; border-radius:14px; }
+.roblox-thumb img.active { opacity:1; }
+
+/* ===== ARROWS ===== */
+.thumb-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.4); color:white; font-size:2rem; padding:6px 12px; border-radius:6px; cursor:pointer; opacity:0; transition:opacity .25s; user-select:none; z-index:5; }
+.roblox-thumb:hover .thumb-nav { opacity:1; }
+.thumb-nav.left { left:8px; }
+.thumb-nav.right { right:8px; }
+
+/* ===== INFO ===== */
+.roblox-info { flex:1; display:flex; flex-direction:column; justify-content:center; gap:16px; }
+.roblox-info h3 { font-size:2.3rem; }
+.roblox-info p1 { color:var(--muted); font-size:1rem; }
+.roblox-info p { color:var(--muted); font-size:1.05rem; line-height:1.6; }
+
+/* ===== SUBINFO ===== */
+.roblox-subinfo { background: rgba(255,255,255,0.05); padding:16px 24px; border-radius:14px; margin-top:12px; font-size:.95rem; color:var(--muted); max-width:1200px; margin-left:auto; margin-right:auto; backdrop-filter:blur(8px); }
+
+/* ===== BUTTONS ===== */
+.button-row { display:flex; flex-direction:column; gap:12px; margin-top:18px; }
+.roblox-btn { padding:.85rem 2.2rem; font-size:1rem; border-radius:10px; border:1px solid var(--border); background:rgba(255,255,255,.08); color:var(--text); cursor:pointer; transition:transform .25s ease, background .25s ease, box-shadow .25s ease; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; }
+.roblox-btn:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,.6); }
+.roblox-btn.view-project { background:var(--accent); color:white; width:100%; }
+.roblox-btn.view-project:hover { background:#1c86ee; }
+.roblox-btn.discord { width:100%; }
+.roblox-btn.video { background:#ff4500; color:white; width:100%; }
+.roblox-btn.video:hover { background:#e03e00; }
+
+/* ===== CONTACT BUTTONS ===== */
+.contact-buttons { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:24px; }
+.contact-buttons a { padding:.8rem 1.8rem; border-radius:10px; border:1px solid var(--border); background:rgba(255,255,255,.08); color:var(--text); text-decoration:none; transition: all .25s ease; }
+.contact-buttons a:hover { background:white; color:black; transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,.6); }
