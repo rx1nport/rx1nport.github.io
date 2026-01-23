@@ -150,7 +150,7 @@
   </section>
 
   <section id="contact">
-   <h2 style="text-align: center; margin-bottom: 20px">Contact Info</h2>
+   <h2 style="text-align: center; margin-bottom: 20px">Info</h2>
    <div class="contact-buttons">
     <a href="https://discordapp.com/users/1095889173870809248" target="_blank"
      >Discord</a
@@ -161,47 +161,5 @@
    </div>
    <p style="text-align: center; opacity: 0.5; margin-top: 32px">© 2026</p>
   </section>
-
-  <script>
-   /* reveal */
-   const obs = new IntersectionObserver(
-    (e) => {
-     e.forEach((x) => x.target.classList.toggle("visible", x.isIntersecting));
-    },
-    { threshold: 0.2 },
-   );
-   document.querySelectorAll("section").forEach((s) => obs.observe(s));
-
-   /* pfp pulse */
-   const ring = document.getElementById("pfpRing");
-   document.getElementById("pfpTrigger").addEventListener("mouseenter", () => {
-    ring.classList.remove("pulse");
-    void ring.offsetWidth;
-    ring.classList.add("pulse");
-   });
-
-   /* slideshows with arrows */
-   document.querySelectorAll("[data-slideshow]").forEach((card) => {
-    const slides = card.querySelectorAll("img");
-    let i = 0;
-    const showSlide = (index) => {
-     slides.forEach((s, idx) => s.classList.toggle("active", idx === index));
-    };
-    const leftBtn = card.querySelector(".thumb-nav.left");
-    const rightBtn = card.querySelector(".thumb-nav.right");
-    leftBtn.addEventListener("click", () => {
-     i = (i - 1 + slides.length) % slides.length;
-     showSlide(i);
-    });
-    rightBtn.addEventListener("click", () => {
-     i = (i + 1) % slides.length;
-     showSlide(i);
-    });
-    setInterval(() => {
-     i = (i + 1) % slides.length;
-     showSlide(i);
-    }, 4000);
-   });
-  </script>
  </body>
 </html>
