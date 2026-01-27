@@ -1,7 +1,7 @@
 /* Reveals */
 const obs = new IntersectionObserver(
   e => { e.forEach(x=>x.target.classList.toggle("visible", x.isIntersecting)); },
-  { threshold:0.2 }
+  { threshold:0.1 }
 );
 document.querySelectorAll("section").forEach(s=>obs.observe(s));
 
@@ -20,9 +20,7 @@ document.getElementById("pfpTrigger").addEventListener("mouseenter", () => {
   ring.addEventListener("animationend", () => {
     isPulsing = false;
   }, { once: true });
-  setTimeout(() => {
-  console.log("Wait");
-  }, 20);
+  setTimeout(() => 20);
 });   
 
 /* Slideshow Arrows */
