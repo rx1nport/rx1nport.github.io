@@ -22,7 +22,7 @@ document.getElementById("pfpTrigger").addEventListener("mouseenter", () => {
   }, { once: true });
   setTimeout(() => {
   console.log("Wait");
-  }, 250);
+  }, 20);
 });   
 
 /* Slideshow Arrows */
