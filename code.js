@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', () => {
 const nav = document.getElementById('nav')
 const small = document.getElementById('small')
 const big = document.getElementById('big')
@@ -243,3 +244,4 @@ window.addEventListener('scroll', () => {
 }, { passive: true })
 
 updateParallax()
+})
