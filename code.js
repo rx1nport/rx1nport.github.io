@@ -227,11 +227,34 @@ function updateParallax() {
     heroSlantB.style.transform = `translate3d(0, ${scrollY * -0.05}px, 0) rotate(-7deg)`
   }
 
-  if (about) {
-    const aboutTop = about.offsetTop
-    const relative = Math.max(0, scrollY - aboutTop + window.innerHeight * 0.7)
-    about.style.transform = `translateY(${Math.max(0, 36 - relative * 0.05)}px)`
+  let parallaxTicking = false
+
+function updateParallax() {
+  const scrollY = window.scrollY
+
+  if (heroGrid) {
+    heroGrid.style.transform = `translate3d(0, ${scrollY * 0.08}px, 0)`
   }
+
+  if (heroSlantA) {
+    heroSlantA.style.transform = `translate3d(0, ${scrollY * 0.05}px, 0) rotate(-9deg)`
+  }
+
+  if (heroSlantB) {
+    heroSlantB.style.transform = `translate3d(0, ${scrollY * -0.03}px, 0) rotate(-7deg)`
+  }
+
+  parallaxTicking = false
+}
+
+window.addEventListener('scroll', () => {
+  if (!parallaxTicking) {
+    requestAnimationFrame(updateParallax)
+    parallaxTicking = true
+  }
+}, { passive: true })
+
+updateParallax()
 
   parallaxTicking = false
 }
