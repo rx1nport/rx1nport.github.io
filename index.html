@@ -1,193 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rainport</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>// RAIN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <nav id="nav">
+    <a href="#hero" class="nav-logo"><span class="sl">//</span> RAIN</a>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
 
-<nav>
-  <ul>
-    <li><a href="#projects">Projects</a></li>
-    <li><a class="home" href="#pfp-section">Home</a></li>
-    <li><a href="#contact">Contact Info</a></li>
-  </ul>
-</nav>
+  <div id="hero" class="page-block">
+    <div class="hero-grid"></div>
+    <div class="hero-slant-a"></div>
+    <div class="hero-slant-b"></div>
 
-<section class="pfp-section" id="pfp-section">
-  <div class="pfp-wrapper" id="pfpTrigger">
-    <div class="pfp-ring" id="pfpRing"></div>
-    <div class="pfp"><img src="https://i.imgur.com/sqGdPmr.jpeg" /></div>
-  </div>
-  <h1>rain</h1>
-  <p>Developer · Designer</p>
-</section>
-
-<section id="about">
-  <div class="about">
-    <div>
-      <h2>Hey there.</h2>
-      <p>
-        Hi, I'm rain, a developer from the US. I'm usually working on projects on
-        the platform ROBLOX.
-      </p>
+    <div class="name-clip">
+      <div class="hero-name-small" id="small">HI I'M</div>
+      <div class="hero-name" id="big">RAIN</div>
     </div>
 
-    <div>
-      <h2>Skills</h2>
-      <p>Full-stack developer · Game design · Cloud · Lore writing</p>
-      <div class="skills-icons">
-        <img src="https://skillicons.dev/icons?i=html,css,js,ts,python,java,cs,react,github,linux,unity,lua" />
+    <div class="hero-bottom reveal">
+      <div class="hero-desc">
+        <strong>I make stuff for fun.</strong><br>
       </div>
     </div>
+
+    <a href="#about" class="hero-scroll" aria-label="Scroll to about">
+      <div class="scroll-line"></div>
+      <div class="scroll-label">SCROLL</div>
+    </a>
   </div>
-</section>
 
-<section id="projects">
-  <h2>Projects</h2>
+  <section id="about" class="section page-block">
+    <div class="section-inner">
+      <div class="about-head">
+        <div class="about-clip">
+          <div class="about-heading" id="aboutBig">ABOUT</div>
+        </div>
 
-  <!-- PROJECT 1 -->
-  <div class="roblox-project" data-slideshow>
-    <div class="roblox-thumb">
-      <span class="thumb-nav left">&#10094;</span>
-      <span class="thumb-nav right">&#10095;</span>
-      <img src="https://i.imgur.com/bxXjnjR.jpeg" class="active" />
-      <img src="https://i.imgur.com/3z9kzCH.jpeg" />
-      <img src="https://i.imgur.com/EmsPZvi.jpeg" />
-    </div>
+        <p class="about-copy scroll-fade">
+          <strong>Hi, I'm rain, a developer from the US.</strong> I usually work on projects on the platform ROBLOX.
+          <br><br>
+          Semi-Fullstack Developer · Game design · Lore writing 
+        </p>
+      </div>
 
-    <div class="roblox-info">
-      <h3>
-        Project Apex
-        <span class="role-badge tester">TESTER</span>
-      </h3>
-      <p1>Arcsoft Development</p1>
-      <p>
-        IN DEVELOPMENT — GAME IS CURRENTLY CLOSED.<br /><br />
-        Inspired by HELLMET, deadlines and brm5.
-      </p>
-      <p>
-        Working as QA tester.
-      </p>
+      <div class="about-right-grid">
+        <div>
+          <div class="projects-label scroll-fade">Projects</div>
 
-      <div class="button-row">
-        <a href="https://www.roblox.com/games/15509312676/PROJECT-APEX"
-           class="roblox-btn view-project"
-           target="_blank">▶ View Project</a>
+          <div class="project-card-grid scroll-scale" id="projectCardGrid">
+            <button class="project-card active" type="button" data-title="[LEGACY] Rooms: Revisited" data-company="EclipseGames!" data-meta="Dev" data-desc="Step into an office where each door is a gamble. Under new management — renovation update coming soon." data-gallery="https://i.imgur.com/7MsAERQ.png|https://i.imgur.com/sQvSwuc.png" data-thumb="https://i.imgur.com/7MsAERQ.png">
+              <img src="https://i.imgur.com/7MsAERQ.png" alt="Rooms Revisited card">
+              <div class="project-card-meta">
+                <div class="project-card-title">Rooms: Revisited</div>
+                <div class="project-card-sub">EX-Dev</div>
+              </div>
+            </button>
 
-        <a href="https://discord.gg/arcsoft"
-           class="roblox-btn discord"
-           target="_blank">Discord</a>
+            <button class="project-card" type="button" data-title="Vendetta" data-company="Shellworks Development" data-meta="Dev" data-desc="Side project that I'm working on. Still in early development stage. Sneak peeks in discord. More updates coming soon." data-gallery="https://i.imgur.com/iKKKUjP.png" data-thumb="https://i.imgur.com/iKKKUjP.png">
+              <img src="https://i.imgur.com/iKKKUjP.png" alt="Vendetta card">
+              <div class="project-card-meta">
+                <div class="project-card-title">Vendetta</div>
+                <div class="project-card-sub">Currently Inactive</div>
+              </div>
+            </button>
+          </div>
+        </div>
 
-        <a href="https://youtu.be/T5aKU_bxM_4?si=L9Zt6x3uoayIk0k8"
-           class="roblox-btn video"
-           target="_blank">Watch The Latest Development Reel</a>
+        <div>
+          <div class="experience-label scroll-fade">Experience</div>
+
+          <div class="experience-list scroll-rise">
+            <div class="experience-item active scroll-fade stagger-1">
+              <div class="experience-main">
+                <div class="experience-role">Mostly doing commissions whenever I have some time</div>
+                <div class="experience-company">Freelance</div>
+              </div>
+              <div class="experience-meta">2025 — Now</div>
+            </div>
+
+            <div class="experience-item scroll-fade stagger-2">
+              <div class="experience-main">
+                <div class="experience-role">Rooms Revisited</div>
+                <div class="experience-company">Game Projects</div>
+              </div>
+              <div class="experience-meta">2025 FEB-2025 JULY<br>Worked both Frontend and Backend for game systems.</div>
+            </div>
+
+            <div class="experience-item scroll-fade stagger-3">
+              <div class="experience-main">
+                <div class="experience-role">Frontend / Design Work</div>
+                <div class="experience-company">Personal Projects</div>
+              </div>
+              <div class="experience-meta">2022 — 2024<br>Personal & Commissions</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="roblox-subinfo">
-    A next-gen ROBLOX game. PVE Mission-based campaign following the history of
-    the TITAN Corporation, experienced through helmet-cam footage, try it when it releases!
-  </div>
-
-  <!-- PROJECT 2 -->
-  <div class="roblox-project" data-slideshow>
-    <div class="roblox-thumb">
-      <span class="thumb-nav left">&#10094;</span>
-      <span class="thumb-nav right">&#10095;</span>
-      <img src="https://i.imgur.com/7MsAERQ.png" class="active"/>
-      <img src="https://i.imgur.com/sQvSwuc.png"/>
-    </div>
-
-    <div class="roblox-info">
-      <h3>
-        [LEGACY] Rooms: Revisited
-        <span class="role-badge dev">DEV</span>
-      </h3>
-      <p1>by EclipseGames!</p1>
-      <p>
-        Inspired by @nicorocks5555's ROOMS. <br/>
-        Left due to issues & drama.
-      </p>
-
-      <div class="button-row">
-        <a href="https://www.roblox.com/games/15363062864/ROOMS-REVISITED"
-           class="roblox-btn view-project"
-           target="_blank">▶ View Project</a>
-
-        <a href="https://discord.gg/PsvMR7tK"
-           class="roblox-btn discord"
-           target="_blank">Discord</a>
-
-        <a href="https://youtu.be/e3u_CEmHRtE?si=E1oR7zNSgu7ywtpW"
-           class="roblox-btn video"
-           target="_blank">Trailer Video</a>
-
-        <a href="https://youtu.be/KNtG8c7pBZg?si=rSVDUKQ2qzUVbjr6"
-           class="roblox-btn video"
-           target="_blank">Renovation Update Trailer</a>
+  <div class="hover-preview" id="hoverPreview" aria-hidden="true">
+    <div class="hover-preview-card">
+      <img src="https://i.imgur.com/7MsAERQ.png" alt="Hover preview" class="hover-preview-image" id="hoverPreviewImage">
+      <div class="hover-preview-body">
+        <div class="hover-preview-top">
+          <span id="hoverPreviewCompany">EclipseGames!</span>
+          <span id="hoverPreviewMeta">EX-Dev</span>
+        </div>
+        <div class="hover-preview-title" id="hoverPreviewTitle">[LEGACY] Rooms: Revisited</div>
+        <div class="hover-preview-desc" id="hoverPreviewDesc">Step into an office where each door is a gamble. Under new management — renovation update coming soon. Left due to internal drama.</div>
       </div>
     </div>
   </div>
 
-  <div class="roblox-subinfo">
-    Step into an office where each door is a gamble. Under new management —
-    renovation update coming soon.
-  </div>
-
-  <!-- PROJECT 3 -->
-  <div class="roblox-project" data-slideshow>
-    <div class="roblox-thumb">
-      <span class="thumb-nav left">&#10094;</span>
-      <span class="thumb-nav right">&#10095;</span>
-      <img src="https://i.imgur.com/iKKKUjP.png" class="active" />
-    </div>
-
-    <div class="roblox-info">
-      <h3>
-        Vendetta
-        <span class="role-badge dev">DEV</span>
-      </h3>
-      <p1>Shellworks Development</p1>
-      <p>
-        IN DEVELOPMENT — GAME IS CURRENTLY CLOSED.<br /><br />
-        Inspired by games like Project Apex.
-      </p>
-
-      <div class="button-row">
-        <a href="https://www.roblox.com/games/34567"
-           class="roblox-btn view-project"
-           target="_blank">▶ View Project</a>
-
-        <a href="https://discord.gg/zXGmjSB7"
-           class="roblox-btn discord"
-           target="_blank">Discord</a>
+  <div class="project-popup" id="projectPopup" aria-hidden="true">
+    <div class="project-popup-backdrop" id="projectPopupBackdrop"></div>
+    <div class="project-popup-modal">
+      <button class="project-popup-close" id="projectPopupClose" aria-label="Close preview">✕</button>
+      <div class="project-popup-image-wrap">
+        <img src="https://i.imgur.com/7MsAERQ.png" alt="Project popup preview" class="project-popup-image" id="projectPopupImage">
+      </div>
+      <div class="project-popup-content">
+        <div class="project-popup-top">
+          <span id="projectPopupCompany">EclipseGames!</span>
+          <span id="projectPopupMeta">EX-Dev</span>
+        </div>
+        <div class="project-popup-title" id="projectPopupTitle">[LEGACY] Rooms: Revisited</div>
+        <div class="project-popup-desc" id="projectPopupDesc">Step into an office where each door is a gamble. Under new management — renovation update coming soon. Left due to internal drama.</div>
+        <div class="project-popup-thumbs" id="projectPopupThumbs"></div>
       </div>
     </div>
   </div>
 
-  <div class="roblox-subinfo">
-    Side project that I'm working on. Still in early development stage.
-    Sneak peeks in discord. More updates coming soon.
-  </div>
-</section>
-
-<section id="contact">
-  <h2 style="text-align: center; margin-bottom: 20px">Info</h2>
-
-  <div class="contact-buttons">
-    <a href="https://discordapp.com/users/1095889173870809248" target="_blank">Discord</a>
-    <a href="https://www.roblox.com/users/1494350757/profile" target="_blank">Roblox</a>
-  </div>
-
-  <p style="text-align: center; opacity: 0.5; margin-top: 32px">© 2026</p>
-</section>
-
-<script src="code.js"></script>
-
+  <script src="code.js"></script>
 </body>
 </html>
