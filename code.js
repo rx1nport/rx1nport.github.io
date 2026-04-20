@@ -32,6 +32,7 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40)
 })
 
+// ── Hero name: animate in once, never reverse ─────────────────
 window.addEventListener('load', () => {
   requestAnimationFrame(() => {
     small?.classList.add('up')
@@ -39,13 +40,30 @@ window.addEventListener('load', () => {
   })
 })
 
+// ── Hero .reveal elements: fire once via unobserve ────────────
+const heroRevealObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('up')
+      observer.unobserve(entry.target)
+    }
+  })
+}, { threshold: 0.12 })
+
+// ── Non-hero .reveal elements: normal reversible toggle ───────
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     entry.target.classList.toggle('up', entry.isIntersecting)
   })
 }, { threshold: 0.12 })
 
-revealEls.forEach((el) => revealObserver.observe(el))
+revealEls.forEach((el) => {
+  if (el.closest('#hero')) {
+    heroRevealObserver.observe(el)
+  } else {
+    revealObserver.observe(el)
+  }
+})
 
 const scrollObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
@@ -112,17 +130,25 @@ function openProjectPopup(card) {
 
   projectPopupThumbs.innerHTML = ''
 
-  gallery.forEach((img, i) => {
-    const btn = document.createElement('button')
-    btn.className = 'project-popup-thumb'
-    btn.innerHTML = `<img src="${img}">`
+  if (gallery.length > 1) {
+    gallery.forEach((img, i) => {
+      const btn = document.createElement('button')
+      btn.className = 'project-popup-thumb' + (i === 0 ? ' active' : '')
+      btn.type = 'button'
+      btn.innerHTML = `<img src="${img}" alt="Thumbnail ${i + 1}">`
 
-    btn.onclick = () => {
-      projectPopupImage.src = img
-    }
+      btn.onclick = () => {
+        projectPopupImage.src = img
+        projectPopupThumbs.querySelectorAll('.project-popup-thumb').forEach(t => t.classList.remove('active'))
+        btn.classList.add('active')
+      }
 
-    projectPopupThumbs.appendChild(btn)
-  })
+      projectPopupThumbs.appendChild(btn)
+    })
+    projectPopupThumbs.style.display = 'grid'
+  } else {
+    projectPopupThumbs.style.display = 'none'
+  }
 
   projectPopup.classList.add('show')
   document.body.style.overflow = 'hidden'
