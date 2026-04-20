@@ -128,6 +128,7 @@
     </div>
   </section>
 
+  <!-- Hover preview (follows cursor) -->
   <div class="hover-preview" id="hoverPreview" aria-hidden="true">
     <div class="hover-preview-card">
       <img src="https://i.imgur.com/7MsAERQ.png" alt="Hover preview" class="hover-preview-image" id="hoverPreviewImage">
@@ -137,10 +138,26 @@
           <span id="hoverPreviewMeta">EX-Dev</span>
         </div>
         <div class="hover-preview-title" id="hoverPreviewTitle">[LEGACY] Rooms: Revisited</div>
-        <div class="hover-preview-desc" id="hoverPreviewDesc">Step into an office where each door is a gamble. Under new management — renovation update coming soon. Left due to internal drama.</div>
+        <div class="hover-preview-desc" id="hoverPreviewDesc">Step into an office where each door is a gamble.</div>
       </div>
     </div>
   </div>
+
+  <div class="project-popup" id="projectPopup" aria-modal="true" role="dialog" aria-label="Project details">
+    <div class="project-popup-backdrop" id="projectPopupBackdrop"></div>
+    <div class="project-popup-modal">
+      <button class="project-popup-close" id="projectPopupClose" aria-label="Close">&#10005;</button>
+      <div class="project-popup-image-wrap">
+        <img class="project-popup-image" id="projectPopupImage" src="" alt="Project screenshot">
+      </div>
+      <div class="project-popup-content">
+        <div class="project-popup-top">
+          <span id="projectPopupCompany"></span>
+          <span id="projectPopupMeta"></span>
+        </div>
+        <div class="project-popup-title" id="projectPopupTitle"></div>
+        <div class="project-popup-desc" id="projectPopupDesc"></div>
+        <div class="project-popup-thumbs" id="projectPopupThumbs"></div>
       </div>
     </div>
   </div>
