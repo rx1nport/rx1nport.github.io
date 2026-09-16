@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-const nav = document.getElementById('nav')
 const small = document.getElementById('small')
 const big = document.getElementById('big')
 const aboutBig = document.getElementById('aboutBig')
@@ -28,29 +27,24 @@ const projectPopupTitle = document.getElementById('projectPopupTitle')
 const projectPopupDesc = document.getElementById('projectPopupDesc')
 const projectPopupThumbs = document.getElementById('projectPopupThumbs')
 
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40)
-})
 
-// ── Hero name: animate in once, never reverse ─────────────────
+// ── Hero name: animate ONLY once ──────────────────────────────
 window.addEventListener('load', () => {
   requestAnimationFrame(() => {
     small?.classList.add('up')
     big?.classList.add('up')
+
+    // Trigger all other hero reveal elements once
+    revealEls.forEach(el => {
+      if (el.closest('#hero')) {
+        el.classList.add('up')
+      }
+    })
   })
 })
 
-// ── Hero .reveal elements: fire once via unobserve ────────────
-const heroRevealObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('up')
-      observer.unobserve(entry.target)
-    }
-  })
-}, { threshold: 0.12 })
 
-// ── Non-hero .reveal elements: normal reversible toggle ───────
+// ── Non-hero .reveal elements: reversible ─────────────────────
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     entry.target.classList.toggle('up', entry.isIntersecting)
@@ -58,13 +52,13 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 })
 
 revealEls.forEach((el) => {
-  if (el.closest('#hero')) {
-    heroRevealObserver.observe(el)
-  } else {
+  if (!el.closest('#hero')) {
     revealObserver.observe(el)
   }
 })
 
+
+// ── Scroll fade / rise / scale ────────────────────────────────
 const scrollObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     entry.target.classList.toggle('in-view', entry.isIntersecting)
@@ -74,6 +68,8 @@ const scrollObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.scroll-fade, .scroll-rise, .scroll-scale')
   .forEach((el) => scrollObserver.observe(el))
 
+
+// ── Page blocks ───────────────────────────────────────────────
 const pageObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     entry.target.classList.toggle('in-view', entry.isIntersecting)
@@ -82,27 +78,40 @@ const pageObserver = new IntersectionObserver((entries) => {
 
 pageBlocks.forEach((block) => pageObserver.observe(block))
 
+
+// ── About heading ─────────────────────────────────────────────
 if (aboutBig) {
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       aboutBig.classList.toggle('up', e.isIntersecting)
     })
   }, { threshold: 0.25 })
-  obs.observe(document.getElementById('about'))
+
+  const about = document.getElementById('about')
+  if (about) obs.observe(about)
 }
 
+
+// ── Hover preview ─────────────────────────────────────────────
 function setHoverPreviewPosition(x, y) {
   const w = 320
   const h = 360
+
   const xPos = Math.min(x + 24, window.innerWidth - w - 16)
   const yPos = Math.min(y + 24, window.innerHeight - h - 16)
-  hoverPreview.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`
+
+  hoverPreview.style.transform =
+    `translate3d(${xPos}px, ${yPos}px, 0)`
 }
+
 
 function setProjectPreview(card) {
   const title = card.dataset.title || 'Project'
+
   const gallery = (card.dataset.gallery || card.dataset.thumb || '')
-    .split('|').map(i => i.trim()).filter(Boolean)
+    .split('|')
+    .map(i => i.trim())
+    .filter(Boolean)
 
   const img = gallery[0] || card.dataset.thumb || ''
 
@@ -116,9 +125,14 @@ function setProjectPreview(card) {
   hoverPreviewDesc.textContent = card.dataset.desc || ''
 }
 
+
+// ── Project popup ─────────────────────────────────────────────
 function openProjectPopup(card) {
+
   const gallery = (card.dataset.gallery || card.dataset.thumb || '')
-    .split('|').map(i => i.trim()).filter(Boolean)
+    .split('|')
+    .map(i => i.trim())
+    .filter(Boolean)
 
   const title = card.dataset.title || 'Project'
 
@@ -131,35 +145,56 @@ function openProjectPopup(card) {
   projectPopupThumbs.innerHTML = ''
 
   if (gallery.length > 1) {
+
     gallery.forEach((img, i) => {
+
       const btn = document.createElement('button')
-      btn.className = 'project-popup-thumb' + (i === 0 ? ' active' : '')
+
+      btn.className =
+        'project-popup-thumb' +
+        (i === 0 ? ' active' : '')
+
       btn.type = 'button'
-      btn.innerHTML = `<img src="${img}" alt="Thumbnail ${i + 1}">`
+
+      btn.innerHTML =
+        `<img src="${img}" alt="Thumbnail ${i + 1}">`
 
       btn.onclick = () => {
+
         projectPopupImage.src = img
-        projectPopupThumbs.querySelectorAll('.project-popup-thumb').forEach(t => t.classList.remove('active'))
+
+        projectPopupThumbs
+          .querySelectorAll('.project-popup-thumb')
+          .forEach(t => t.classList.remove('active'))
+
         btn.classList.add('active')
       }
 
       projectPopupThumbs.appendChild(btn)
     })
+
     projectPopupThumbs.style.display = 'grid'
+
   } else {
+
     projectPopupThumbs.style.display = 'none'
+
   }
 
   projectPopup.classList.add('show')
   document.body.style.overflow = 'hidden'
 }
 
+
 function closeProjectPopup() {
   projectPopup.classList.remove('show')
   document.body.style.overflow = ''
 }
 
+
+// ── Project cards ─────────────────────────────────────────────
 projectCards.forEach(card => {
+
   card.addEventListener('mouseenter', e => {
     setProjectPreview(card)
     setHoverPreviewPosition(e.clientX, e.clientY)
@@ -177,40 +212,60 @@ projectCards.forEach(card => {
   card.addEventListener('click', () => {
     openProjectPopup(card)
   })
+
 })
 
-projectPopupBackdrop?.addEventListener('click', closeProjectPopup)
-projectPopupClose?.addEventListener('click', closeProjectPopup)
+
+// ── Popup controls ────────────────────────────────────────────
+projectPopupBackdrop?.addEventListener(
+  'click',
+  closeProjectPopup
+)
+
+projectPopupClose?.addEventListener(
+  'click',
+  closeProjectPopup
+)
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeProjectPopup()
+  if (e.key === 'Escape') {
+    closeProjectPopup()
+  }
 })
 
+
+// ── Parallax ──────────────────────────────────────────────────
 let ticking = false
 
 function updateParallax() {
+
   const y = window.scrollY
 
   if (heroGrid) {
-    heroGrid.style.transform = `translate3d(0, ${y * 0.08}px, 0)`
+    heroGrid.style.transform =
+      `translate3d(0, ${y * 0.08}px, 0)`
   }
 
   if (heroSlantA) {
-    heroSlantA.style.transform = `translate3d(0, ${y * 0.05}px, 0) rotate(-9deg)`
+    heroSlantA.style.transform =
+      `translate3d(0, ${y * 0.05}px, 0) rotate(-9deg)`
   }
 
   if (heroSlantB) {
-    heroSlantB.style.transform = `translate3d(0, ${y * -0.03}px, 0) rotate(-7deg)`
+    heroSlantB.style.transform =
+      `translate3d(0, ${y * -0.03}px, 0) rotate(-7deg)`
   }
 
   ticking = false
 }
 
 window.addEventListener('scroll', () => {
+
   if (!ticking) {
     requestAnimationFrame(updateParallax)
     ticking = true
   }
+
 }, { passive: true })
 
 updateParallax()
