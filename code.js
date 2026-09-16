@@ -9,34 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroSlantA = document.querySelector('.hero-slant-a');
   const heroSlantB = document.querySelector('.hero-slant-b');
 
-  /* ─────────────────────────────────────────
-     HERO TITLE — PLAY ONCE
-  ───────────────────────────────────────── */
-
   window.addEventListener('load', () => {
     requestAnimationFrame(() => {
       small?.classList.add('up');
       big?.classList.add('up');
 
-      /*
-        Mark them as permanently animated.
-        Other observers will ignore them.
-      */
       small?.classList.add('hero-done');
       big?.classList.add('hero-done');
     });
   });
 
-
-  /* ─────────────────────────────────────────
-     REVEAL ANIMATIONS
-  ───────────────────────────────────────── */
-
   const revealObserver = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
-
-        /* NEVER touch anything inside the hero */
         if (entry.target.closest('#hero')) {
           return;
         }
@@ -52,22 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-
   revealEls.forEach(el => {
     if (!el.closest('#hero')) {
       revealObserver.observe(el);
     }
   });
 
-
-  /* ─────────────────────────────────────────
-     SCROLL ANIMATIONS
-  ───────────────────────────────────────── */
-
   const scrollObserver = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
-
         if (entry.target.closest('#hero')) {
           return;
         }
@@ -83,29 +61,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-
   document
     .querySelectorAll(
       '.scroll-fade, .scroll-rise, .scroll-scale'
     )
     .forEach(el => {
-
       if (!el.closest('#hero')) {
         scrollObserver.observe(el);
       }
-
     });
-
-
-  /* ─────────────────────────────────────────
-     PAGE BLOCKS
-  ───────────────────────────────────────── */
 
   const pageObserver = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
-
-        /* NEVER animate the hero */
         if (entry.target.id === 'hero') {
           return;
         }
@@ -121,28 +89,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-
   pageBlocks.forEach(block => {
-
     if (block.id !== 'hero') {
       pageObserver.observe(block);
     }
-
   });
-
-
-  /* ─────────────────────────────────────────
-     HERO PARALLAX
-  ───────────────────────────────────────── */
 
   let ticking = false;
 
   window.addEventListener('scroll', () => {
-
     if (!ticking) {
-
       window.requestAnimationFrame(() => {
-
         const y = window.scrollY;
 
         if (heroGrid) {
@@ -165,13 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       ticking = true;
     }
-
   });
-
-
-  /* ─────────────────────────────────────────
-     PROJECT HOVER PREVIEW
-  ───────────────────────────────────────── */
 
   const hoverPreview =
     document.querySelector('.hover-preview');
@@ -185,65 +136,62 @@ document.addEventListener('DOMContentLoaded', () => {
   const hoverDesc =
     document.querySelector('.hover-preview-desc');
 
-  const hoverTop =
-    document.querySelector('.hover-preview-top');
+  const hoverCompany =
+    document.querySelector('#hoverPreviewCompany');
 
+  const hoverMeta =
+    document.querySelector('#hoverPreviewMeta');
 
-  document.querySelectorAll('.experience-item')
-    .forEach(item => {
+  document.querySelectorAll('.project-card')
+    .forEach(card => {
 
-      item.addEventListener('mouseenter', () => {
+      card.addEventListener('mouseenter', () => {
 
-        const image = item.dataset.image;
-        const title = item.dataset.title;
-        const description = item.dataset.description;
-        const type = item.dataset.type;
-        const date = item.dataset.date;
+        const image =
+          card.dataset.thumb ||
+          card.querySelector('img')?.src;
+
+        const title =
+          card.dataset.title || '';
+
+        const description =
+          card.dataset.desc || '';
+
+        const company =
+          card.dataset.company || '';
+
+        const meta =
+          card.dataset.meta || '';
 
         if (hoverImage && image) {
           hoverImage.src = image;
         }
 
-        if (hoverTitle && title) {
+        if (hoverTitle) {
           hoverTitle.textContent = title;
         }
 
-        if (hoverDesc && description) {
+        if (hoverDesc) {
           hoverDesc.textContent = description;
         }
 
-        if (hoverTop) {
-          const typeEl =
-            hoverTop.querySelector('.preview-type');
+        if (hoverCompany) {
+          hoverCompany.textContent = company;
+        }
 
-          const dateEl =
-            hoverTop.querySelector('.preview-date');
-
-          if (typeEl) {
-            typeEl.textContent = type || '';
-          }
-
-          if (dateEl) {
-            dateEl.textContent = date || '';
-          }
+        if (hoverMeta) {
+          hoverMeta.textContent = meta;
         }
 
         hoverPreview?.classList.add('show');
-        item.classList.add('active');
+        card.classList.add('active');
       });
 
-
-      item.addEventListener('mouseleave', () => {
-
+      card.addEventListener('mouseleave', () => {
         hoverPreview?.classList.remove('show');
-        item.classList.remove('active');
-
+        card.classList.remove('active');
       });
-
     });
-
-
-  /* Move preview with mouse */
 
   document.addEventListener('mousemove', e => {
 
@@ -269,13 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     hoverPreview.style.transform =
       `translate3d(${x}px, ${y}px, 0)`;
-
   });
-
-
-  /* ─────────────────────────────────────────
-     PROJECT POPUP
-  ───────────────────────────────────────── */
 
   const popup =
     document.querySelector('.project-popup');
@@ -289,75 +231,121 @@ document.addEventListener('DOMContentLoaded', () => {
   const popupDesc =
     document.querySelector('.project-popup-desc');
 
-  const popupTop =
-    document.querySelector('.project-popup-top');
+  const popupCompany =
+    document.querySelector('#projectPopupCompany');
+
+  const popupMeta =
+    document.querySelector('#projectPopupMeta');
+
+  const popupThumbs =
+    document.querySelector('#projectPopupThumbs');
 
   const popupClose =
     document.querySelector('.project-popup-close');
-
 
   document.querySelectorAll('.project-card')
     .forEach(card => {
 
       card.addEventListener('click', () => {
 
-        const image = card.dataset.image;
-        const title = card.dataset.title;
-        const description = card.dataset.description;
-        const type = card.dataset.type;
-        const date = card.dataset.date;
+        const gallery =
+          card.dataset.gallery
+            ? card.dataset.gallery.split('|')
+            : [];
+
+        const image =
+          gallery[0] ||
+          card.dataset.thumb ||
+          card.querySelector('img')?.src;
+
+        const title =
+          card.dataset.title || '';
+
+        const description =
+          card.dataset.desc || '';
+
+        const company =
+          card.dataset.company || '';
+
+        const meta =
+          card.dataset.meta || '';
 
         if (popupImage && image) {
           popupImage.src = image;
         }
 
-        if (popupTitle && title) {
+        if (popupTitle) {
           popupTitle.textContent = title;
         }
 
-        if (popupDesc && description) {
+        if (popupDesc) {
           popupDesc.textContent = description;
         }
 
-        if (popupTop) {
+        if (popupCompany) {
+          popupCompany.textContent = company;
+        }
 
-          const typeEl =
-            popupTop.querySelector('.popup-type');
+        if (popupMeta) {
+          popupMeta.textContent = meta;
+        }
 
-          const dateEl =
-            popupTop.querySelector('.popup-date');
+        if (popupThumbs) {
 
-          if (typeEl) {
-            typeEl.textContent = type || '';
-          }
+          popupThumbs.innerHTML = '';
 
-          if (dateEl) {
-            dateEl.textContent = date || '';
-          }
+          gallery.forEach((src, index) => {
 
+            const thumb =
+              document.createElement('button');
+
+            thumb.type = 'button';
+            thumb.className =
+              'project-popup-thumb';
+
+            if (index === 0) {
+              thumb.classList.add('active');
+            }
+
+            const img =
+              document.createElement('img');
+
+            img.src = src;
+            img.alt = `${title} screenshot ${index + 1}`;
+
+            thumb.appendChild(img);
+            popupThumbs.appendChild(thumb);
+
+            thumb.addEventListener('click', () => {
+
+              if (popupImage) {
+                popupImage.src = src;
+              }
+
+              document
+                .querySelectorAll('.project-popup-thumb')
+                .forEach(item => {
+                  item.classList.remove('active');
+                });
+
+              thumb.classList.add('active');
+            });
+
+          });
         }
 
         popup?.classList.add('show');
 
         document.body.style.overflow = 'hidden';
-
       });
-
     });
-
-
-  /* Close popup */
 
   popupClose?.addEventListener('click', () => {
 
     popup?.classList.remove('show');
 
     document.body.style.overflow = '';
-
   });
-
-
-  /* Click outside modal */
 
   popup?.addEventListener('click', e => {
 
@@ -370,13 +358,8 @@ document.addEventListener('DOMContentLoaded', () => {
       popup.classList.remove('show');
 
       document.body.style.overflow = '';
-
     }
-
   });
-
-
-  /* Escape key */
 
   document.addEventListener('keydown', e => {
 
@@ -385,9 +368,6 @@ document.addEventListener('DOMContentLoaded', () => {
       popup?.classList.remove('show');
 
       document.body.style.overflow = '';
-
     }
-
   });
-
 });
