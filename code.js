@@ -1,273 +1,490 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-const small = document.getElementById('small')
-const big = document.getElementById('big')
-const aboutBig = document.getElementById('aboutBig')
-const revealEls = document.querySelectorAll('.reveal')
-const pageBlocks = document.querySelectorAll('.page-block')
-const heroGrid = document.querySelector('.hero-grid')
-const heroSlantA = document.querySelector('.hero-slant-a')
-const heroSlantB = document.querySelector('.hero-slant-b')
+  const small = document.getElementById('small')
+  const big = document.getElementById('big')
+  const aboutBig = document.getElementById('aboutBig')
 
-const projectCards = document.querySelectorAll('.project-card')
-const hoverPreview = document.getElementById('hoverPreview')
-const hoverPreviewImage = document.getElementById('hoverPreviewImage')
-const hoverPreviewCompany = document.getElementById('hoverPreviewCompany')
-const hoverPreviewMeta = document.getElementById('hoverPreviewMeta')
-const hoverPreviewTitle = document.getElementById('hoverPreviewTitle')
-const hoverPreviewDesc = document.getElementById('hoverPreviewDesc')
+  const revealEls = document.querySelectorAll('.reveal')
+  const pageBlocks = document.querySelectorAll('.page-block')
 
-const projectPopup = document.getElementById('projectPopup')
-const projectPopupBackdrop = document.getElementById('projectPopupBackdrop')
-const projectPopupClose = document.getElementById('projectPopupClose')
-const projectPopupImage = document.getElementById('projectPopupImage')
-const projectPopupCompany = document.getElementById('projectPopupCompany')
-const projectPopupMeta = document.getElementById('projectPopupMeta')
-const projectPopupTitle = document.getElementById('projectPopupTitle')
-const projectPopupDesc = document.getElementById('projectPopupDesc')
-const projectPopupThumbs = document.getElementById('projectPopupThumbs')
+  const heroGrid = document.querySelector('.hero-grid')
+  const heroSlantA = document.querySelector('.hero-slant-a')
+  const heroSlantB = document.querySelector('.hero-slant-b')
+
+  const projectCards = document.querySelectorAll('.project-card')
+
+  const hoverPreview = document.getElementById('hoverPreview')
+  const hoverPreviewImage = document.getElementById('hoverPreviewImage')
+  const hoverPreviewCompany = document.getElementById('hoverPreviewCompany')
+  const hoverPreviewMeta = document.getElementById('hoverPreviewMeta')
+  const hoverPreviewTitle = document.getElementById('hoverPreviewTitle')
+  const hoverPreviewDesc = document.getElementById('hoverPreviewDesc')
+
+  const projectPopup = document.getElementById('projectPopup')
+  const projectPopupBackdrop = document.getElementById('projectPopupBackdrop')
+  const projectPopupClose = document.getElementById('projectPopupClose')
+  const projectPopupImage = document.getElementById('projectPopupImage')
+  const projectPopupCompany = document.getElementById('projectPopupCompany')
+  const projectPopupMeta = document.getElementById('projectPopupMeta')
+  const projectPopupTitle = document.getElementById('projectPopupTitle')
+  const projectPopupDesc = document.getElementById('projectPopupDesc')
+  const projectPopupThumbs = document.getElementById('projectPopupThumbs')
 
 
-// ── Hero name: animate ONLY once ──────────────────────────────
-window.addEventListener('load', () => {
-  requestAnimationFrame(() => {
-    small?.classList.add('up')
-    big?.classList.add('up')
+  // ─────────────────────────────────────────────
+  // HERO
+  // Animate ONLY ONCE
+  // ─────────────────────────────────────────────
 
-    // Trigger all other hero reveal elements once
-    revealEls.forEach(el => {
-      if (el.closest('#hero')) {
-        el.classList.add('up')
-      }
+  window.addEventListener('load', () => {
+
+    requestAnimationFrame(() => {
+
+      // Main name
+      small?.classList.add('up')
+      big?.classList.add('up')
+
+      // Other hero reveal elements
+      revealEls.forEach(el => {
+        if (el.closest('#hero')) {
+          el.classList.add('up')
+        }
+      })
+
     })
+
   })
-})
 
 
-// ── Non-hero .reveal elements: reversible ─────────────────────
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    entry.target.classList.toggle('up', entry.isIntersecting)
-  })
-}, { threshold: 0.12 })
+  // ─────────────────────────────────────────────
+  // NON-HERO REVEALS
+  // These can animate normally when scrolling
+  // ─────────────────────────────────────────────
 
-revealEls.forEach((el) => {
-  if (!el.closest('#hero')) {
-    revealObserver.observe(el)
-  }
-})
+  const revealObserver = new IntersectionObserver((entries) => {
 
+    entries.forEach(entry => {
 
-// ── Scroll fade / rise / scale ────────────────────────────────
-const scrollObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    entry.target.classList.toggle('in-view', entry.isIntersecting)
-  })
-}, { threshold: 0.14 })
+      // Ignore anything inside the hero
+      if (entry.target.closest('#hero')) return
 
-document.querySelectorAll('.scroll-fade, .scroll-rise, .scroll-scale')
-  .forEach((el) => scrollObserver.observe(el))
+      entry.target.classList.toggle(
+        'up',
+        entry.isIntersecting
+      )
 
-
-// ── Page blocks ───────────────────────────────────────────────
-const pageObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    entry.target.classList.toggle('in-view', entry.isIntersecting)
-  })
-}, { threshold: 0.18 })
-
-pageBlocks.forEach((block) => pageObserver.observe(block))
-
-
-// ── About heading ─────────────────────────────────────────────
-if (aboutBig) {
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      aboutBig.classList.toggle('up', e.isIntersecting)
     })
-  }, { threshold: 0.25 })
 
-  const about = document.getElementById('about')
-  if (about) obs.observe(about)
-}
-
-
-// ── Hover preview ─────────────────────────────────────────────
-function setHoverPreviewPosition(x, y) {
-  const w = 320
-  const h = 360
-
-  const xPos = Math.min(x + 24, window.innerWidth - w - 16)
-  const yPos = Math.min(y + 24, window.innerHeight - h - 16)
-
-  hoverPreview.style.transform =
-    `translate3d(${xPos}px, ${yPos}px, 0)`
-}
+  }, {
+    threshold: 0.12
+  })
 
 
-function setProjectPreview(card) {
-  const title = card.dataset.title || 'Project'
+  revealEls.forEach(el => {
 
-  const gallery = (card.dataset.gallery || card.dataset.thumb || '')
-    .split('|')
-    .map(i => i.trim())
-    .filter(Boolean)
+    // ONLY observe non-hero elements
+    if (!el.closest('#hero')) {
+      revealObserver.observe(el)
+    }
 
-  const img = gallery[0] || card.dataset.thumb || ''
-
-  projectCards.forEach(el => el.classList.remove('active'))
-  card.classList.add('active')
-
-  hoverPreviewImage.src = img
-  hoverPreviewTitle.textContent = title
-  hoverPreviewCompany.textContent = card.dataset.company || ''
-  hoverPreviewMeta.textContent = card.dataset.meta || ''
-  hoverPreviewDesc.textContent = card.dataset.desc || ''
-}
+  })
 
 
-// ── Project popup ─────────────────────────────────────────────
-function openProjectPopup(card) {
+  // ─────────────────────────────────────────────
+  // SCROLL FADE / RISE / SCALE
+  // ─────────────────────────────────────────────
 
-  const gallery = (card.dataset.gallery || card.dataset.thumb || '')
-    .split('|')
-    .map(i => i.trim())
-    .filter(Boolean)
+  const scrollObserver = new IntersectionObserver((entries) => {
 
-  const title = card.dataset.title || 'Project'
+    entries.forEach(entry => {
 
-  projectPopupImage.src = gallery[0] || ''
-  projectPopupTitle.textContent = title
-  projectPopupCompany.textContent = card.dataset.company || ''
-  projectPopupMeta.textContent = card.dataset.meta || ''
-  projectPopupDesc.textContent = card.dataset.desc || ''
+      // Ignore hero elements
+      if (entry.target.closest('#hero')) return
 
-  projectPopupThumbs.innerHTML = ''
+      entry.target.classList.toggle(
+        'in-view',
+        entry.isIntersecting
+      )
 
-  if (gallery.length > 1) {
+    })
 
-    gallery.forEach((img, i) => {
+  }, {
+    threshold: 0.14
+  })
 
-      const btn = document.createElement('button')
 
-      btn.className =
-        'project-popup-thumb' +
-        (i === 0 ? ' active' : '')
+  document
+    .querySelectorAll(
+      '.scroll-fade, .scroll-rise, .scroll-scale'
+    )
+    .forEach(el => {
 
-      btn.type = 'button'
-
-      btn.innerHTML =
-        `<img src="${img}" alt="Thumbnail ${i + 1}">`
-
-      btn.onclick = () => {
-
-        projectPopupImage.src = img
-
-        projectPopupThumbs
-          .querySelectorAll('.project-popup-thumb')
-          .forEach(t => t.classList.remove('active'))
-
-        btn.classList.add('active')
+      // Never observe hero elements
+      if (!el.closest('#hero')) {
+        scrollObserver.observe(el)
       }
 
-      projectPopupThumbs.appendChild(btn)
     })
 
-    projectPopupThumbs.style.display = 'grid'
 
-  } else {
+  // ─────────────────────────────────────────────
+  // PAGE BLOCKS
+  // ─────────────────────────────────────────────
 
-    projectPopupThumbs.style.display = 'none'
+  const pageObserver = new IntersectionObserver((entries) => {
 
-  }
+    entries.forEach(entry => {
 
-  projectPopup.classList.add('show')
-  document.body.style.overflow = 'hidden'
-}
+      // Don't let the hero's page-block state
+      // affect its animations
+      if (entry.target.id === 'hero') return
 
+      entry.target.classList.toggle(
+        'in-view',
+        entry.isIntersecting
+      )
 
-function closeProjectPopup() {
-  projectPopup.classList.remove('show')
-  document.body.style.overflow = ''
-}
+    })
 
-
-// ── Project cards ─────────────────────────────────────────────
-projectCards.forEach(card => {
-
-  card.addEventListener('mouseenter', e => {
-    setProjectPreview(card)
-    setHoverPreviewPosition(e.clientX, e.clientY)
-    hoverPreview.classList.add('show')
+  }, {
+    threshold: 0.18
   })
 
-  card.addEventListener('mousemove', e => {
-    setHoverPreviewPosition(e.clientX, e.clientY)
+
+  pageBlocks.forEach(block => {
+
+    if (block.id !== 'hero') {
+      pageObserver.observe(block)
+    }
+
   })
 
-  card.addEventListener('mouseleave', () => {
-    hoverPreview.classList.remove('show')
+
+  // ─────────────────────────────────────────────
+  // ABOUT HEADING
+  // ─────────────────────────────────────────────
+
+  if (aboutBig) {
+
+    const about = document.getElementById('about')
+
+    if (about) {
+
+      const aboutObserver = new IntersectionObserver((entries) => {
+
+        entries.forEach(entry => {
+
+          aboutBig.classList.toggle(
+            'up',
+            entry.isIntersecting
+          )
+
+        })
+
+      }, {
+        threshold: 0.25
+      })
+
+      aboutObserver.observe(about)
+
+    }
+
+  }
+
+
+  // ─────────────────────────────────────────────
+  // HOVER PREVIEW
+  // ─────────────────────────────────────────────
+
+  function setHoverPreviewPosition(x, y) {
+
+    const w = 320
+    const h = 360
+
+    const xPos = Math.min(
+      x + 24,
+      window.innerWidth - w - 16
+    )
+
+    const yPos = Math.min(
+      y + 24,
+      window.innerHeight - h - 16
+    )
+
+    hoverPreview.style.transform =
+      `translate3d(${xPos}px, ${yPos}px, 0)`
+
+  }
+
+
+  function setProjectPreview(card) {
+
+    const title =
+      card.dataset.title || 'Project'
+
+    const gallery =
+      (card.dataset.gallery ||
+       card.dataset.thumb ||
+       '')
+      .split('|')
+      .map(i => i.trim())
+      .filter(Boolean)
+
+    const img =
+      gallery[0] ||
+      card.dataset.thumb ||
+      ''
+
+
+    projectCards.forEach(el => {
+      el.classList.remove('active')
+    })
+
+    card.classList.add('active')
+
+
+    hoverPreviewImage.src = img
+    hoverPreviewTitle.textContent = title
+    hoverPreviewCompany.textContent =
+      card.dataset.company || ''
+
+    hoverPreviewMeta.textContent =
+      card.dataset.meta || ''
+
+    hoverPreviewDesc.textContent =
+      card.dataset.desc || ''
+
+  }
+
+
+  // ─────────────────────────────────────────────
+  // PROJECT POPUP
+  // ─────────────────────────────────────────────
+
+  function openProjectPopup(card) {
+
+    const gallery =
+      (card.dataset.gallery ||
+       card.dataset.thumb ||
+       '')
+      .split('|')
+      .map(i => i.trim())
+      .filter(Boolean)
+
+    const title =
+      card.dataset.title || 'Project'
+
+
+    projectPopupImage.src =
+      gallery[0] || ''
+
+    projectPopupTitle.textContent =
+      title
+
+    projectPopupCompany.textContent =
+      card.dataset.company || ''
+
+    projectPopupMeta.textContent =
+      card.dataset.meta || ''
+
+    projectPopupDesc.textContent =
+      card.dataset.desc || ''
+
+
+    projectPopupThumbs.innerHTML = ''
+
+
+    if (gallery.length > 1) {
+
+      gallery.forEach((img, i) => {
+
+        const btn =
+          document.createElement('button')
+
+        btn.className =
+          'project-popup-thumb' +
+          (i === 0 ? ' active' : '')
+
+        btn.type = 'button'
+
+        btn.innerHTML =
+          `<img src="${img}" alt="Thumbnail ${i + 1}">`
+
+
+        btn.onclick = () => {
+
+          projectPopupImage.src = img
+
+          projectPopupThumbs
+            .querySelectorAll(
+              '.project-popup-thumb'
+            )
+            .forEach(t => {
+              t.classList.remove('active')
+            })
+
+          btn.classList.add('active')
+
+        }
+
+
+        projectPopupThumbs.appendChild(btn)
+
+      })
+
+      projectPopupThumbs.style.display = 'grid'
+
+    } else {
+
+      projectPopupThumbs.style.display = 'none'
+
+    }
+
+
+    projectPopup.classList.add('show')
+
+    document.body.style.overflow = 'hidden'
+
+  }
+
+
+  function closeProjectPopup() {
+
+    projectPopup.classList.remove('show')
+
+    document.body.style.overflow = ''
+
+  }
+
+
+  // ─────────────────────────────────────────────
+  // PROJECT CARDS
+  // ─────────────────────────────────────────────
+
+  projectCards.forEach(card => {
+
+    card.addEventListener('mouseenter', e => {
+
+      setProjectPreview(card)
+
+      setHoverPreviewPosition(
+        e.clientX,
+        e.clientY
+      )
+
+      hoverPreview.classList.add('show')
+
+    })
+
+
+    card.addEventListener('mousemove', e => {
+
+      setHoverPreviewPosition(
+        e.clientX,
+        e.clientY
+      )
+
+    })
+
+
+    card.addEventListener('mouseleave', () => {
+
+      hoverPreview.classList.remove('show')
+
+    })
+
+
+    card.addEventListener('click', () => {
+
+      openProjectPopup(card)
+
+    })
+
   })
 
-  card.addEventListener('click', () => {
-    openProjectPopup(card)
+
+  // ─────────────────────────────────────────────
+  // POPUP CONTROLS
+  // ─────────────────────────────────────────────
+
+  projectPopupBackdrop?.addEventListener(
+    'click',
+    closeProjectPopup
+  )
+
+  projectPopupClose?.addEventListener(
+    'click',
+    closeProjectPopup
+  )
+
+
+  document.addEventListener('keydown', e => {
+
+    if (e.key === 'Escape') {
+      closeProjectPopup()
+    }
+
   })
 
-})
+
+  // ─────────────────────────────────────────────
+  // PARALLAX
+  // ─────────────────────────────────────────────
+
+  let ticking = false
 
 
-// ── Popup controls ────────────────────────────────────────────
-projectPopupBackdrop?.addEventListener(
-  'click',
-  closeProjectPopup
-)
+  function updateParallax() {
 
-projectPopupClose?.addEventListener(
-  'click',
-  closeProjectPopup
-)
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeProjectPopup()
-  }
-})
+    const y = window.scrollY
 
 
-// ── Parallax ──────────────────────────────────────────────────
-let ticking = false
+    if (heroGrid) {
 
-function updateParallax() {
+      heroGrid.style.transform =
+        `translate3d(0, ${y * 0.08}px, 0)`
 
-  const y = window.scrollY
+    }
 
-  if (heroGrid) {
-    heroGrid.style.transform =
-      `translate3d(0, ${y * 0.08}px, 0)`
-  }
 
-  if (heroSlantA) {
-    heroSlantA.style.transform =
-      `translate3d(0, ${y * 0.05}px, 0) rotate(-9deg)`
-  }
+    if (heroSlantA) {
 
-  if (heroSlantB) {
-    heroSlantB.style.transform =
-      `translate3d(0, ${y * -0.03}px, 0) rotate(-7deg)`
+      heroSlantA.style.transform =
+        `translate3d(0, ${y * 0.05}px, 0) rotate(-9deg)`
+
+    }
+
+
+    if (heroSlantB) {
+
+      heroSlantB.style.transform =
+        `translate3d(0, ${y * -0.03}px, 0) rotate(-7deg)`
+
+    }
+
+
+    ticking = false
+
   }
 
-  ticking = false
-}
 
-window.addEventListener('scroll', () => {
+  window.addEventListener('scroll', () => {
 
-  if (!ticking) {
-    requestAnimationFrame(updateParallax)
-    ticking = true
-  }
+    if (!ticking) {
 
-}, { passive: true })
+      requestAnimationFrame(
+        updateParallax
+      )
 
-updateParallax()
+      ticking = true
+
+    }
+
+  }, {
+    passive: true
+  })
+
+
+  updateParallax()
 
 })
