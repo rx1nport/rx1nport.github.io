@@ -4,19 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rain's Port</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <nav id="nav">
-    <ul class="nav-links">
-      <li><a>RAIN'S PORT</a></li>
-      <li><a href="#hero">Home</a></li>
-      <li><a href="#about">About</a></li>
-    </ul>
-  </nav>
 
+<body>
+
+  <!-- HERO -->
   <div id="hero" class="page-block">
+
     <div class="hero-grid"></div>
     <div class="hero-slant-a"></div>
     <div class="hero-slant-b"></div>
@@ -36,132 +37,355 @@
       <div class="scroll-line"></div>
       <div class="scroll-label">SCROLL</div>
     </a>
+
   </div>
 
+
+  <!-- ABOUT -->
   <section id="about" class="section page-block">
+
     <div class="section-inner">
+
       <div class="about-head">
+
         <div class="about-clip">
           <div class="about-heading" id="aboutBig">ABOUT</div>
         </div>
 
         <p class="about-copy scroll-fade">
-          <strong>Hi, I'm rain, a developer from the US.</strong> I usually work on projects on the platform ROBLOX.
+          <strong>Hi, I'm rain, a developer from the US.</strong>
+          I usually work on projects on the platform ROBLOX.
+
           <br><br>
+
           Semi-Fullstack Developer · Game Design · Lore Writing
         </p>
+
       </div>
 
-      <div class="about-right-grid">
-        <div>
-          <div class="projects-label scroll-fade">Projects</div>
 
-          <div class="project-card-grid scroll-scale" id="projectCardGrid">
-            <button class="project-card active" type="button"
+      <!-- PROJECTS + EXPERIENCE -->
+      <div class="about-right-grid">
+
+        <!-- PROJECTS -->
+        <div>
+
+          <div class="projects-label scroll-fade">
+            Projects
+          </div>
+
+          <div
+            class="project-card-grid scroll-scale"
+            id="projectCardGrid"
+          >
+
+            <!-- PROJECT 1 -->
+            <button
+              class="project-card active"
+              type="button"
               data-title="[LEGACY] Rooms: Revisited"
               data-company="EclipseGames!"
               data-meta="EX-Dev"
               data-desc="Step into an office where each door is a gamble. Under new management — renovation update coming soon."
               data-gallery="https://i.imgur.com/7MsAERQ.png|https://i.imgur.com/sQvSwuc.png"
-              data-thumb="https://i.imgur.com/7MsAERQ.png">
-              <img src="https://i.imgur.com/7MsAERQ.png" alt="Rooms Revisited card">
+              data-thumb="https://i.imgur.com/7MsAERQ.png"
+            >
+
+              <img
+                src="https://i.imgur.com/7MsAERQ.png"
+                alt="Rooms Revisited card"
+                loading="lazy"
+              >
+
               <div class="project-card-meta">
-                <div class="project-card-title">Rooms: Revisited</div>
-                <div class="project-card-sub">EX-Dev</div>
+
+                <div class="project-card-title">
+                  Rooms: Revisited
+                </div>
+
+                <div class="project-card-sub">
+                  EX-Dev
+                </div>
+
               </div>
+
             </button>
 
-            <button class="project-card" type="button"
+
+            <!-- PROJECT 2 -->
+            <button
+              class="project-card"
+              type="button"
               data-title="Vendetta"
               data-company="Shellworks Development"
               data-meta="Inactive"
               data-desc="A side project currently on hold. Early development work with more updates planned later."
               data-gallery="https://i.imgur.com/iKKKUjP.png"
-              data-thumb="https://i.imgur.com/iKKKUjP.png">
-              <img src="https://i.imgur.com/iKKKUjP.png" alt="Vendetta card">
+              data-thumb="https://i.imgur.com/iKKKUjP.png"
+            >
+
+              <img
+                src="https://i.imgur.com/iKKKUjP.png"
+                alt="Vendetta card"
+                loading="lazy"
+              >
+
               <div class="project-card-meta">
-                <div class="project-card-title">Vendetta</div>
-                <div class="project-card-sub">Inactive</div>
+
+                <div class="project-card-title">
+                  Vendetta
+                </div>
+
+                <div class="project-card-sub">
+                  Inactive
+                </div>
+
               </div>
+
             </button>
+
           </div>
+
         </div>
 
+
+        <!-- EXPERIENCE -->
         <div>
-          <div class="experience-label scroll-fade">Experience · 5 years in Studio</div>
+
+          <div class="experience-label scroll-fade">
+            Experience · 5 years in Studio
+          </div>
 
           <div class="experience-list scroll-rise">
+
+
+            <!-- EXPERIENCE 1 -->
             <div class="experience-item active scroll-fade stagger-1">
+
               <div class="experience-main">
-                <div class="info">Standstill</div>
-                <div class="info2">Mostly smaller commission work and personal projects, haven't done much as of late.</div>
+
+                <div class="info">
+                  Standstill
+                </div>
+
+                <div class="info2">
+                  Mostly smaller commission work and personal projects, haven't done much as of late.
+                </div>
+
               </div>
-              <div class="experience-meta">2025 — Now</div>
+
+              <div class="experience-meta">
+                2025 — Now
+              </div>
+
             </div>
 
+
+            <!-- EXPERIENCE 2 -->
             <div class="experience-item scroll-fade stagger-2">
+
               <div class="experience-main">
-                <div class="info">Rooms: Revisited</div>
-                <div class="info2">Worked on frontend and backend game systems.</div>
+
+                <div class="info">
+                  Rooms: Revisited
+                </div>
+
+                <div class="info2">
+                  Worked on frontend and backend game systems.
+                </div>
+
               </div>
-              <div class="experience-meta">Feb 2025 — Jul 2025<br>Game Project</div>
+
+              <div class="experience-meta">
+                Feb 2025 — Jul 2025<br>
+                Game Project
+              </div>
+
             </div>
 
+
+            <!-- EXPERIENCE 3 -->
             <div class="experience-item scroll-fade stagger-3">
+
               <div class="experience-main">
-                <div class="info">Personal projects</div>
-                <div class="info2">Improved skills through early commissions.</div>
+
+                <div class="info">
+                  Personal projects
+                </div>
+
+                <div class="info2">
+                  Improved skills through early commissions.
+                </div>
+
               </div>
-              <div class="experience-meta">2022 — 2024<br>Personal Work</div>
+
+              <div class="experience-meta">
+                2022 — 2024<br>
+                Personal Work
+              </div>
+
             </div>
 
+
+            <!-- EXPERIENCE 4 -->
             <div class="experience-item scroll-fade stagger-4">
+
               <div class="experience-main">
-                <div class="info">Started using Roblox Studio</div>
-                <div class="info2">Improved over time.</div>
+
+                <div class="info">
+                  Started using Roblox Studio
+                </div>
+
+                <div class="info2">
+                  Improved over time.
+                </div>
+
               </div>
-              <div class="experience-meta">2020<br>Beginning</div>
+
+              <div class="experience-meta">
+                2020<br>
+                Beginning
+              </div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
 
-  <!-- Hover preview (follows cursor) -->
-  <div class="hover-preview" id="hoverPreview" aria-hidden="true">
+
+  <!-- HOVER PREVIEW -->
+  <div
+    class="hover-preview"
+    id="hoverPreview"
+    aria-hidden="true"
+  >
+
     <div class="hover-preview-card">
-      <img src="https://i.imgur.com/7MsAERQ.png" alt="Hover preview" class="hover-preview-image" id="hoverPreviewImage">
+
+      <img
+        src="https://i.imgur.com/7MsAERQ.png"
+        alt="Hover preview"
+        class="hover-preview-image"
+        id="hoverPreviewImage"
+      >
+
       <div class="hover-preview-body">
+
         <div class="hover-preview-top">
-          <span id="hoverPreviewCompany">EclipseGames!</span>
-          <span id="hoverPreviewMeta">EX-Dev</span>
+
+          <span id="hoverPreviewCompany">
+            EclipseGames!
+          </span>
+
+          <span id="hoverPreviewMeta">
+            EX-Dev
+          </span>
+
         </div>
-        <div class="hover-preview-title" id="hoverPreviewTitle">[LEGACY] Rooms: Revisited</div>
-        <div class="hover-preview-desc" id="hoverPreviewDesc">Step into an office where each door is a gamble.</div>
+
+        <div
+          class="hover-preview-title"
+          id="hoverPreviewTitle"
+        >
+          [LEGACY] Rooms: Revisited
+        </div>
+
+        <div
+          class="hover-preview-desc"
+          id="hoverPreviewDesc"
+        >
+          Step into an office where each door is a gamble.
+        </div>
+
       </div>
+
     </div>
+
   </div>
 
-  <div class="project-popup" id="projectPopup" aria-modal="true" role="dialog" aria-label="Project details">
-    <div class="project-popup-backdrop" id="projectPopupBackdrop"></div>
+
+  <!-- PROJECT POPUP -->
+  <div
+    class="project-popup"
+    id="projectPopup"
+    aria-modal="true"
+    role="dialog"
+    aria-label="Project details"
+  >
+
+    <div
+      class="project-popup-backdrop"
+      id="projectPopupBackdrop"
+    ></div>
+
+
     <div class="project-popup-modal">
-      <button class="project-popup-close" id="projectPopupClose" aria-label="Close">&#10005;</button>
+
+      <button
+        class="project-popup-close"
+        id="projectPopupClose"
+        aria-label="Close"
+        type="button"
+      >
+        &#10005;
+      </button>
+
+
       <div class="project-popup-image-wrap">
-        <img class="project-popup-image" id="projectPopupImage" src="" alt="Project screenshot">
+
+        <img
+          class="project-popup-image"
+          id="projectPopupImage"
+          src=""
+          alt="Project screenshot"
+        >
+
       </div>
+
+
       <div class="project-popup-content">
+
         <div class="project-popup-top">
+
           <span id="projectPopupCompany"></span>
           <span id="projectPopupMeta"></span>
+
         </div>
-        <div class="project-popup-title" id="projectPopupTitle"></div>
-        <div class="project-popup-desc" id="projectPopupDesc"></div>
-        <div class="project-popup-thumbs" id="projectPopupThumbs"></div>
+
+
+        <div
+          class="project-popup-title"
+          id="projectPopupTitle"
+        ></div>
+
+
+        <div
+          class="project-popup-desc"
+          id="projectPopupDesc"
+        ></div>
+
+
+        <div
+          class="project-popup-thumbs"
+          id="projectPopupThumbs"
+        ></div>
+
       </div>
+
     </div>
+
   </div>
 
+
+  <!-- JAVASCRIPT -->
   <script src="code.js"></script>
+
 </body>
 </html>
