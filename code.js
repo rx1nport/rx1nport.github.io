@@ -1,116 +1,87 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const small = document.getElementById('small');
+  const big = document.getElementById('big');
 
-  const small = document.getElementById('small')
-  const big = document.getElementById('big')
-  const aboutBig = document.getElementById('aboutBig')
+  const revealEls = document.querySelectorAll('.reveal');
+  const pageBlocks = document.querySelectorAll('.page-block');
 
-  const revealEls = document.querySelectorAll('.reveal')
-  const pageBlocks = document.querySelectorAll('.page-block')
+  const heroGrid = document.querySelector('.hero-grid');
+  const heroSlantA = document.querySelector('.hero-slant-a');
+  const heroSlantB = document.querySelector('.hero-slant-b');
 
-  const heroGrid = document.querySelector('.hero-grid')
-  const heroSlantA = document.querySelector('.hero-slant-a')
-  const heroSlantB = document.querySelector('.hero-slant-b')
-
-  const projectCards = document.querySelectorAll('.project-card')
-
-  const hoverPreview = document.getElementById('hoverPreview')
-  const hoverPreviewImage = document.getElementById('hoverPreviewImage')
-  const hoverPreviewCompany = document.getElementById('hoverPreviewCompany')
-  const hoverPreviewMeta = document.getElementById('hoverPreviewMeta')
-  const hoverPreviewTitle = document.getElementById('hoverPreviewTitle')
-  const hoverPreviewDesc = document.getElementById('hoverPreviewDesc')
-
-  const projectPopup = document.getElementById('projectPopup')
-  const projectPopupBackdrop = document.getElementById('projectPopupBackdrop')
-  const projectPopupClose = document.getElementById('projectPopupClose')
-  const projectPopupImage = document.getElementById('projectPopupImage')
-  const projectPopupCompany = document.getElementById('projectPopupCompany')
-  const projectPopupMeta = document.getElementById('projectPopupMeta')
-  const projectPopupTitle = document.getElementById('projectPopupTitle')
-  const projectPopupDesc = document.getElementById('projectPopupDesc')
-  const projectPopupThumbs = document.getElementById('projectPopupThumbs')
-
-
-  // ─────────────────────────────────────────────
-  // HERO
-  // Animate ONLY ONCE
-  // ─────────────────────────────────────────────
+  /* ─────────────────────────────────────────
+     HERO TITLE — PLAY ONCE
+  ───────────────────────────────────────── */
 
   window.addEventListener('load', () => {
-
     requestAnimationFrame(() => {
+      small?.classList.add('up');
+      big?.classList.add('up');
 
-      // Main name
-      small?.classList.add('up')
-      big?.classList.add('up')
+      /*
+        Mark them as permanently animated.
+        Other observers will ignore them.
+      */
+      small?.classList.add('hero-done');
+      big?.classList.add('hero-done');
+    });
+  });
 
-      // Other hero reveal elements
-      revealEls.forEach(el => {
-        if (el.closest('#hero')) {
-          el.classList.add('up')
+
+  /* ─────────────────────────────────────────
+     REVEAL ANIMATIONS
+  ───────────────────────────────────────── */
+
+  const revealObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+
+        /* NEVER touch anything inside the hero */
+        if (entry.target.closest('#hero')) {
+          return;
         }
-      })
 
-    })
-
-  })
-
-
-  // ─────────────────────────────────────────────
-  // NON-HERO REVEALS
-  // These can animate normally when scrolling
-  // ─────────────────────────────────────────────
-
-  const revealObserver = new IntersectionObserver((entries) => {
-
-    entries.forEach(entry => {
-
-      // Ignore anything inside the hero
-      if (entry.target.closest('#hero')) return
-
-      entry.target.classList.toggle(
-        'up',
-        entry.isIntersecting
-      )
-
-    })
-
-  }, {
-    threshold: 0.12
-  })
+        entry.target.classList.toggle(
+          'up',
+          entry.isIntersecting
+        );
+      });
+    },
+    {
+      threshold: 0.12
+    }
+  );
 
 
   revealEls.forEach(el => {
-
-    // ONLY observe non-hero elements
     if (!el.closest('#hero')) {
-      revealObserver.observe(el)
+      revealObserver.observe(el);
     }
+  });
 
-  })
 
+  /* ─────────────────────────────────────────
+     SCROLL ANIMATIONS
+  ───────────────────────────────────────── */
 
-  // ─────────────────────────────────────────────
-  // SCROLL FADE / RISE / SCALE
-  // ─────────────────────────────────────────────
+  const scrollObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
 
-  const scrollObserver = new IntersectionObserver((entries) => {
+        if (entry.target.closest('#hero')) {
+          return;
+        }
 
-    entries.forEach(entry => {
-
-      // Ignore hero elements
-      if (entry.target.closest('#hero')) return
-
-      entry.target.classList.toggle(
-        'in-view',
-        entry.isIntersecting
-      )
-
-    })
-
-  }, {
-    threshold: 0.14
-  })
+        entry.target.classList.toggle(
+          'in-view',
+          entry.isIntersecting
+        );
+      });
+    },
+    {
+      threshold: 0.14
+    }
+  );
 
 
   document
@@ -119,372 +90,304 @@ document.addEventListener('DOMContentLoaded', () => {
     )
     .forEach(el => {
 
-      // Never observe hero elements
       if (!el.closest('#hero')) {
-        scrollObserver.observe(el)
+        scrollObserver.observe(el);
       }
 
-    })
+    });
 
 
-  // ─────────────────────────────────────────────
-  // PAGE BLOCKS
-  // ─────────────────────────────────────────────
+  /* ─────────────────────────────────────────
+     PAGE BLOCKS
+  ───────────────────────────────────────── */
 
-  const pageObserver = new IntersectionObserver((entries) => {
+  const pageObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
 
-    entries.forEach(entry => {
+        /* NEVER animate the hero */
+        if (entry.target.id === 'hero') {
+          return;
+        }
 
-      // Don't let the hero's page-block state
-      // affect its animations
-      if (entry.target.id === 'hero') return
-
-      entry.target.classList.toggle(
-        'in-view',
-        entry.isIntersecting
-      )
-
-    })
-
-  }, {
-    threshold: 0.18
-  })
+        entry.target.classList.toggle(
+          'in-view',
+          entry.isIntersecting
+        );
+      });
+    },
+    {
+      threshold: 0.18
+    }
+  );
 
 
   pageBlocks.forEach(block => {
 
     if (block.id !== 'hero') {
-      pageObserver.observe(block)
+      pageObserver.observe(block);
     }
 
-  })
+  });
 
 
-  // ─────────────────────────────────────────────
-  // ABOUT HEADING
-  // ─────────────────────────────────────────────
+  /* ─────────────────────────────────────────
+     HERO PARALLAX
+  ───────────────────────────────────────── */
 
-  if (aboutBig) {
-
-    const about = document.getElementById('about')
-
-    if (about) {
-
-      const aboutObserver = new IntersectionObserver((entries) => {
-
-        entries.forEach(entry => {
-
-          aboutBig.classList.toggle(
-            'up',
-            entry.isIntersecting
-          )
-
-        })
-
-      }, {
-        threshold: 0.25
-      })
-
-      aboutObserver.observe(about)
-
-    }
-
-  }
-
-
-  // ─────────────────────────────────────────────
-  // HOVER PREVIEW
-  // ─────────────────────────────────────────────
-
-  function setHoverPreviewPosition(x, y) {
-
-    const w = 320
-    const h = 360
-
-    const xPos = Math.min(
-      x + 24,
-      window.innerWidth - w - 16
-    )
-
-    const yPos = Math.min(
-      y + 24,
-      window.innerHeight - h - 16
-    )
-
-    hoverPreview.style.transform =
-      `translate3d(${xPos}px, ${yPos}px, 0)`
-
-  }
-
-
-  function setProjectPreview(card) {
-
-    const title =
-      card.dataset.title || 'Project'
-
-    const gallery =
-      (card.dataset.gallery ||
-       card.dataset.thumb ||
-       '')
-      .split('|')
-      .map(i => i.trim())
-      .filter(Boolean)
-
-    const img =
-      gallery[0] ||
-      card.dataset.thumb ||
-      ''
-
-
-    projectCards.forEach(el => {
-      el.classList.remove('active')
-    })
-
-    card.classList.add('active')
-
-
-    hoverPreviewImage.src = img
-    hoverPreviewTitle.textContent = title
-    hoverPreviewCompany.textContent =
-      card.dataset.company || ''
-
-    hoverPreviewMeta.textContent =
-      card.dataset.meta || ''
-
-    hoverPreviewDesc.textContent =
-      card.dataset.desc || ''
-
-  }
-
-
-  // ─────────────────────────────────────────────
-  // PROJECT POPUP
-  // ─────────────────────────────────────────────
-
-  function openProjectPopup(card) {
-
-    const gallery =
-      (card.dataset.gallery ||
-       card.dataset.thumb ||
-       '')
-      .split('|')
-      .map(i => i.trim())
-      .filter(Boolean)
-
-    const title =
-      card.dataset.title || 'Project'
-
-
-    projectPopupImage.src =
-      gallery[0] || ''
-
-    projectPopupTitle.textContent =
-      title
-
-    projectPopupCompany.textContent =
-      card.dataset.company || ''
-
-    projectPopupMeta.textContent =
-      card.dataset.meta || ''
-
-    projectPopupDesc.textContent =
-      card.dataset.desc || ''
-
-
-    projectPopupThumbs.innerHTML = ''
-
-
-    if (gallery.length > 1) {
-
-      gallery.forEach((img, i) => {
-
-        const btn =
-          document.createElement('button')
-
-        btn.className =
-          'project-popup-thumb' +
-          (i === 0 ? ' active' : '')
-
-        btn.type = 'button'
-
-        btn.innerHTML =
-          `<img src="${img}" alt="Thumbnail ${i + 1}">`
-
-
-        btn.onclick = () => {
-
-          projectPopupImage.src = img
-
-          projectPopupThumbs
-            .querySelectorAll(
-              '.project-popup-thumb'
-            )
-            .forEach(t => {
-              t.classList.remove('active')
-            })
-
-          btn.classList.add('active')
-
-        }
-
-
-        projectPopupThumbs.appendChild(btn)
-
-      })
-
-      projectPopupThumbs.style.display = 'grid'
-
-    } else {
-
-      projectPopupThumbs.style.display = 'none'
-
-    }
-
-
-    projectPopup.classList.add('show')
-
-    document.body.style.overflow = 'hidden'
-
-  }
-
-
-  function closeProjectPopup() {
-
-    projectPopup.classList.remove('show')
-
-    document.body.style.overflow = ''
-
-  }
-
-
-  // ─────────────────────────────────────────────
-  // PROJECT CARDS
-  // ─────────────────────────────────────────────
-
-  projectCards.forEach(card => {
-
-    card.addEventListener('mouseenter', e => {
-
-      setProjectPreview(card)
-
-      setHoverPreviewPosition(
-        e.clientX,
-        e.clientY
-      )
-
-      hoverPreview.classList.add('show')
-
-    })
-
-
-    card.addEventListener('mousemove', e => {
-
-      setHoverPreviewPosition(
-        e.clientX,
-        e.clientY
-      )
-
-    })
-
-
-    card.addEventListener('mouseleave', () => {
-
-      hoverPreview.classList.remove('show')
-
-    })
-
-
-    card.addEventListener('click', () => {
-
-      openProjectPopup(card)
-
-    })
-
-  })
-
-
-  // ─────────────────────────────────────────────
-  // POPUP CONTROLS
-  // ─────────────────────────────────────────────
-
-  projectPopupBackdrop?.addEventListener(
-    'click',
-    closeProjectPopup
-  )
-
-  projectPopupClose?.addEventListener(
-    'click',
-    closeProjectPopup
-  )
-
-
-  document.addEventListener('keydown', e => {
-
-    if (e.key === 'Escape') {
-      closeProjectPopup()
-    }
-
-  })
-
-
-  // ─────────────────────────────────────────────
-  // PARALLAX
-  // ─────────────────────────────────────────────
-
-  let ticking = false
-
-
-  function updateParallax() {
-
-    const y = window.scrollY
-
-
-    if (heroGrid) {
-
-      heroGrid.style.transform =
-        `translate3d(0, ${y * 0.08}px, 0)`
-
-    }
-
-
-    if (heroSlantA) {
-
-      heroSlantA.style.transform =
-        `translate3d(0, ${y * 0.05}px, 0) rotate(-9deg)`
-
-    }
-
-
-    if (heroSlantB) {
-
-      heroSlantB.style.transform =
-        `translate3d(0, ${y * -0.03}px, 0) rotate(-7deg)`
-
-    }
-
-
-    ticking = false
-
-  }
-
+  let ticking = false;
 
   window.addEventListener('scroll', () => {
 
     if (!ticking) {
 
-      requestAnimationFrame(
-        updateParallax
-      )
+      window.requestAnimationFrame(() => {
 
-      ticking = true
+        const y = window.scrollY;
+
+        if (heroGrid) {
+          heroGrid.style.transform =
+            `translate3d(0, ${y * 0.08}px, 0)`;
+        }
+
+        if (heroSlantA) {
+          heroSlantA.style.transform =
+            `translate3d(0, ${y * 0.035}px, 0) rotate(-9deg)`;
+        }
+
+        if (heroSlantB) {
+          heroSlantB.style.transform =
+            `translate3d(0, ${y * -0.025}px, 0) rotate(-7deg)`;
+        }
+
+        ticking = false;
+      });
+
+      ticking = true;
+    }
+
+  });
+
+
+  /* ─────────────────────────────────────────
+     PROJECT HOVER PREVIEW
+  ───────────────────────────────────────── */
+
+  const hoverPreview =
+    document.querySelector('.hover-preview');
+
+  const hoverImage =
+    document.querySelector('.hover-preview-image');
+
+  const hoverTitle =
+    document.querySelector('.hover-preview-title');
+
+  const hoverDesc =
+    document.querySelector('.hover-preview-desc');
+
+  const hoverTop =
+    document.querySelector('.hover-preview-top');
+
+
+  document.querySelectorAll('.experience-item')
+    .forEach(item => {
+
+      item.addEventListener('mouseenter', () => {
+
+        const image = item.dataset.image;
+        const title = item.dataset.title;
+        const description = item.dataset.description;
+        const type = item.dataset.type;
+        const date = item.dataset.date;
+
+        if (hoverImage && image) {
+          hoverImage.src = image;
+        }
+
+        if (hoverTitle && title) {
+          hoverTitle.textContent = title;
+        }
+
+        if (hoverDesc && description) {
+          hoverDesc.textContent = description;
+        }
+
+        if (hoverTop) {
+          const typeEl =
+            hoverTop.querySelector('.preview-type');
+
+          const dateEl =
+            hoverTop.querySelector('.preview-date');
+
+          if (typeEl) {
+            typeEl.textContent = type || '';
+          }
+
+          if (dateEl) {
+            dateEl.textContent = date || '';
+          }
+        }
+
+        hoverPreview?.classList.add('show');
+        item.classList.add('active');
+      });
+
+
+      item.addEventListener('mouseleave', () => {
+
+        hoverPreview?.classList.remove('show');
+        item.classList.remove('active');
+
+      });
+
+    });
+
+
+  /* Move preview with mouse */
+
+  document.addEventListener('mousemove', e => {
+
+    if (!hoverPreview?.classList.contains('show')) {
+      return;
+    }
+
+    const offset = 18;
+
+    let x = e.clientX + offset;
+    let y = e.clientY + offset;
+
+    const rect =
+      hoverPreview.getBoundingClientRect();
+
+    if (x + rect.width > window.innerWidth) {
+      x = e.clientX - rect.width - offset;
+    }
+
+    if (y + rect.height > window.innerHeight) {
+      y = e.clientY - rect.height - offset;
+    }
+
+    hoverPreview.style.transform =
+      `translate3d(${x}px, ${y}px, 0)`;
+
+  });
+
+
+  /* ─────────────────────────────────────────
+     PROJECT POPUP
+  ───────────────────────────────────────── */
+
+  const popup =
+    document.querySelector('.project-popup');
+
+  const popupImage =
+    document.querySelector('.project-popup-image');
+
+  const popupTitle =
+    document.querySelector('.project-popup-title');
+
+  const popupDesc =
+    document.querySelector('.project-popup-desc');
+
+  const popupTop =
+    document.querySelector('.project-popup-top');
+
+  const popupClose =
+    document.querySelector('.project-popup-close');
+
+
+  document.querySelectorAll('.project-card')
+    .forEach(card => {
+
+      card.addEventListener('click', () => {
+
+        const image = card.dataset.image;
+        const title = card.dataset.title;
+        const description = card.dataset.description;
+        const type = card.dataset.type;
+        const date = card.dataset.date;
+
+        if (popupImage && image) {
+          popupImage.src = image;
+        }
+
+        if (popupTitle && title) {
+          popupTitle.textContent = title;
+        }
+
+        if (popupDesc && description) {
+          popupDesc.textContent = description;
+        }
+
+        if (popupTop) {
+
+          const typeEl =
+            popupTop.querySelector('.popup-type');
+
+          const dateEl =
+            popupTop.querySelector('.popup-date');
+
+          if (typeEl) {
+            typeEl.textContent = type || '';
+          }
+
+          if (dateEl) {
+            dateEl.textContent = date || '';
+          }
+
+        }
+
+        popup?.classList.add('show');
+
+        document.body.style.overflow = 'hidden';
+
+      });
+
+    });
+
+
+  /* Close popup */
+
+  popupClose?.addEventListener('click', () => {
+
+    popup?.classList.remove('show');
+
+    document.body.style.overflow = '';
+
+  });
+
+
+  /* Click outside modal */
+
+  popup?.addEventListener('click', e => {
+
+    if (
+      e.target.classList.contains(
+        'project-popup-backdrop'
+      )
+    ) {
+
+      popup.classList.remove('show');
+
+      document.body.style.overflow = '';
 
     }
 
-  }, {
-    passive: true
-  })
+  });
 
 
-  updateParallax()
+  /* Escape key */
 
-})
+  document.addEventListener('keydown', e => {
+
+    if (e.key === 'Escape') {
+
+      popup?.classList.remove('show');
+
+      document.body.style.overflow = '';
+
+    }
+
+  });
+
+});
